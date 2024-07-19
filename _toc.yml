@@ -1,9 +1,15 @@
 format: jb-book
-root: README
 parts:
-  - caption: Preamble
-    chapters:
-      - file: notebooks/how-to-cite
-  - caption: Introduction
-    chapters:
-      - file: notebooks/notebook-template
+- caption: Preamble
+  chapters:
+  - file: notebooks/how-to-cite
+- caption: Floodmapping
+  chapters:
+  - file: notebooks/02_floodmapping
+- caption: Classification
+  chapters:
+  - file: notebooks/01_classification
+- caption: References
+  chapters:
+  - file: notebooks/references
+root: README
