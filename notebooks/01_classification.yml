@@ -1,0 +1,15 @@
+name: 01_classification
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - mamba
+  - jupyter
+  - xarray
+  - cmcrameri
+  - python-dotenv
+  - rasterio
+  - folium
+  - pip:
+    - eodag
