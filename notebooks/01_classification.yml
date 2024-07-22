@@ -1,15 +1,21 @@
 name: 01_classification
 channels:
   - conda-forge
+  - defaults
 dependencies:
   - python=3.10
   - pip
   - mamba
   - jupyter
   - xarray
-  - cmcrameri
-  - python-dotenv
+  - stackstac
+  - odc-stac
+  - dask
   - rasterio
-  - folium
+  - cmcrameri
+  - numpy
+  - matplotlib
+  - seaborn
+  - scikit-learn
   - pip:
-    - eodag
+      - pystac-client
