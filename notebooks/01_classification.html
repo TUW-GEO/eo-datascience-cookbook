@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Data Acquisition &#8212; Project Pythia Cookbook Template</title>
+    <title>title: Classification subtitle: Finding forests with satelite imagery jupyter: kernelspec: name: “01_classification” language: “python” display_name: “01_classification” format: html: code-fold: show eval: true &#8212; Project Pythia Cookbook Template</title>
   
   
   
@@ -71,12 +71,14 @@
                 gtag('config', 'G-T52X8HNYE8');
             </script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/01_classification';</script>
     <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="References {.unnumbered}" href="references.html" />
-    <link rel="prev" title="title: Reverend Bayes updates our Belief in Flood Detection subtitle: How an 275 year old idea helps map the extent of floods jupyter: kernelspec: name: “02_floodmapping” language: “python” display_name: “02_floodmapping”" href="02_floodmapping.html" />
+    <link rel="next" title="title: Reverend Bayes updates our Belief in Flood Detection subtitle: How an 275 year old idea helps map the extent of floods jupyter: kernelspec: name: “02_floodmapping” language: “python” display_name: “02_floodmapping”" href="02_floodmapping.html" />
+    <link rel="prev" title="References {.unnumbered}" href="references.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
     <meta name="docbuild:last-update" content="24 July 2024"/>
@@ -368,6 +370,27 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="how-to-cite.html">How to Cite This Cookbook</a></li>
 </ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="references.html">References {.unnumbered}</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Classification</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">title: Classification
+subtitle: Finding forests with satelite imagery
+jupyter:
+kernelspec:
+name: “01_classification”
+language: “python”
+display_name: “01_classification”
+format:
+html:
+code-fold: show
+eval: true</a></li>
+
+
+
+</ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Floodmapping</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="02_floodmapping.html">title: Reverend Bayes updates our Belief in Flood Detection
@@ -382,16 +405,6 @@ display_name: “02_floodmapping”</a></li>
 
 
 
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Classification</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Data Acquisition</a></li>
-
-
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="references.html">References {.unnumbered}</a></li>
 </ul>
 
     </div>
@@ -421,8 +434,23 @@ display_name: “02_floodmapping”</a></li>
 <div id="searchbox"></div>
                   <article class="bd-article">
                     
-  <p>In this Notebook, we will use <code class="docutils literal notranslate"><span class="pre">Scikit</span> <span class="pre">learn</span></code> to classify an <code class="docutils literal notranslate"><span class="pre">Sentinel-2</span></code> Image. We will use two different classifiers and compare the results.
-To get started we need to import the following modules.</p>
+  <hr class="docutils" />
+<section id="title-classification-subtitle-finding-forests-with-satelite-imagery-jupyter-kernelspec-name-01-classification-language-python-display-name-01-classification-format-html-code-fold-show-eval-true">
+<h1>title: Classification
+subtitle: Finding forests with satelite imagery
+jupyter:
+kernelspec:
+name: “01_classification”
+language: “python”
+display_name: “01_classification”
+format:
+html:
+code-fold: show
+eval: true<a class="headerlink" href="#title-classification-subtitle-finding-forests-with-satelite-imagery-jupyter-kernelspec-name-01-classification-language-python-display-name-01-classification-format-html-code-fold-show-eval-true" title="Link to this heading"><i class="fas fa-link"></i></a></h1>
+</section>
+<section id="data-acquisition">
+<h1>Data Acquisition<a class="headerlink" href="#data-acquisition" title="Link to this heading"><i class="fas fa-link"></i></a></h1>
+<p>In this chapter, we will employ machine learning techniques to classify a scene using satellite imagery. Specifically, we will utilize <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> to implement two distinct classifiers and subsequently compare their results. To begin, we need to import the following modules.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
@@ -457,12 +485,10 @@ To get started we need to import the following modules.</p>
 </div>
 </div>
 </div>
-<section id="data-acquisition">
-<h1>Data Acquisition<a class="headerlink" href="#data-acquisition" title="Link to this heading"><i class="fas fa-link"></i></a></h1>
-<p>Before we start, we need to load the data. We will use <code class="docutils literal notranslate"><span class="pre">odc-stac</span></code> to get data from Earth Search by Element 84. Here we define the area of interest and the time frame, aswell as the EPSG code and the resolution.</p>
+<p>Before we start, we need to load the data. We will use <code class="docutils literal notranslate"><span class="pre">odc-stac</span></code> to obtain data from Earth Search by Element 84. Here we define the area of interest and the time frame, aswell as the EPSG code and the resolution.</p>
 <section id="searching-catalog">
 <h2>Searching Catalog<a class="headerlink" href="#searching-catalog" title="Link to this heading"><i class="fas fa-link"></i></a></h2>
-<p>The module <code class="docutils literal notranslate"><span class="pre">odc-stac</span></code> provides access to free, open source Sattelite data. To actually get to the data, we define some parameters, which specify where and when we want Satelite data from. Also we define what data collection we want to get the data from, since there are multiple to choose from. In this example we use <em>multispectral imagery</em> from the Sentinel-2 Satelite.</p>
+<p>The module <code class="docutils literal notranslate"><span class="pre">odc-stac</span></code> provides access to free, open source satelite data. To retrieve the data, we must define  several parameters that specify the location and time period for the satellite data. Additionally, we must specify the data collection we wish to access, as multiple collections are available. In this example, we will use multispectral imagery from the Sentinel-2 satellite.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dx</span> <span class="o">=</span> <span class="mf">0.0006</span>  <span class="c1"># 60m resolution</span>
@@ -513,13 +539,13 @@ To get started we need to import the following modules.</p>
 </div>
 </div>
 </div>
-<p>Here we will have a look at the area south-east of Vienna, where the Nationalpark <em>Donauauen</em> is located. The time we are interested in is the beginning of may of 2024.
-After passing these parameters to the <code class="docutils literal notranslate"><span class="pre">stac-catalog</span></code>
-We have now found <strong>10 scenes</strong> that we can use for our analysis.</p>
+<p>We will now focus on the area south-east of Vienna, where the Nationalpark <em>Donauauen</em> is situated. The time frame we are interested in is the beginning of May 2024.
+After passing these parameters to the <code class="docutils literal notranslate"><span class="pre">stac-catalog</span></code> we have found <strong>10 scenes</strong> that we can use for our analysis.</p>
 </section>
 <section id="loading-the-data">
 <h2>Loading the Data<a class="headerlink" href="#loading-the-data" title="Link to this heading"><i class="fas fa-link"></i></a></h2>
-<p>Now we will load the data directly into an <code class="docutils literal notranslate"><span class="pre">xarray</span></code> dataset, which we can use to perform computations on the data.</p>
+<p>Now we will load the data directly into an <code class="docutils literal notranslate"><span class="pre">xarray</span></code> dataset, which we can use to perform computations on the data. <code class="docutils literal notranslate"><span class="pre">xarray</span></code> is a powerful library for working with multi-dimensional arrays, making it well-suited for handling satellite data.</p>
+<p>Here’s how we can load the data using odc-stac and xarray:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define a geobox for my region</span>
@@ -541,40 +567,38 @@ We have now found <strong>10 scenes</strong> that we can use for our analysis.</
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[                                        ] | 0% Completed | 131.06 us
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[                                        ] | 0% Completed | 137.07 us
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 103.02 ms
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 103.24 ms
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 203.65 ms
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 204.05 ms
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 304.20 ms
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 304.85 ms
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 404.95 ms
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 417.87 ms
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 505.56 ms
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 525.36 ms
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 615.00 ms
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 724.67 ms
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 825.31 ms
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 626.06 ms
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/miniconda3/envs/01_classification/lib/python3.10/site-packages/rasterio/warp.py:344: NotGeoreferencedWarning: Dataset has no geotransform, gcps, or rpcs. The identity matrix will be returned.
   _reproject(
-/home/runner/miniconda3/envs/01_classification/lib/python3.10/site-packages/rasterio/warp.py:344: NotGeoreferencedWarning: Dataset has no geotransform, gcps, or rpcs. The identity matrix will be returned.
-  _reproject(
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 925.92 ms
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 726.94 ms
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 827.71 ms
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 928.73 ms
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 1.03 s
@@ -598,484 +622,430 @@ We have now found <strong>10 scenes</strong> that we can use for our analysis.</
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 1.63 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 1.73 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 1.74 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 1.83 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 1.84 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[###                                     ] | 8% Completed | 1.93 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 1.94 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[###                                     ] | 8% Completed | 2.03 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 2.05 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[###                                     ] | 8% Completed | 2.13 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[###                                     ] | 8% Completed | 2.15 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[###                                     ] | 8% Completed | 2.23 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[###                                     ] | 8% Completed | 2.25 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[###                                     ] | 8% Completed | 2.34 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####                                    ] | 10% Completed | 2.35 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[###                                     ] | 8% Completed | 2.44 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####                                    ] | 10% Completed | 2.45 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[###                                     ] | 8% Completed | 2.54 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######                                  ] | 15% Completed | 2.55 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[###                                     ] | 8% Completed | 2.64 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######                                  ] | 15% Completed | 2.65 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####                                    ] | 10% Completed | 2.74 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######                                  ] | 15% Completed | 2.75 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####                                    ] | 10% Completed | 2.84 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######                                  ] | 15% Completed | 2.85 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####                                    ] | 10% Completed | 2.94 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######                                  ] | 15% Completed | 2.96 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[#####                                   ] | 14% Completed | 3.04 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######                                  ] | 15% Completed | 3.06 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[#####                                   ] | 14% Completed | 3.15 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######                                  ] | 15% Completed | 3.16 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######                                  ] | 15% Completed | 3.25 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######                                  ] | 15% Completed | 3.26 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######                                  ] | 15% Completed | 3.35 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######                                  ] | 15% Completed | 3.37 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 3.45 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######                                  ] | 15% Completed | 3.47 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 3.55 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[#######                                 ] | 18% Completed | 3.57 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 3.65 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 3.67 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 3.75 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 3.77 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 3.85 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 3.87 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 3.95 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 3.98 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 4.05 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 4.08 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 4.15 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 4.18 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 4.25 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########                              ] | 26% Completed | 4.28 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 4.35 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########                              ] | 26% Completed | 4.38 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 4.45 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########                              ] | 26% Completed | 4.48 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 4.56 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########                              ] | 26% Completed | 4.58 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 4.66 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########                              ] | 26% Completed | 4.70 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 4.76 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########                              ] | 26% Completed | 4.80 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 4.86 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########                              ] | 26% Completed | 4.90 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[###########                             ] | 28% Completed | 4.96 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 5.00 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[###########                             ] | 28% Completed | 5.06 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 5.10 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 5.16 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 5.20 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 5.26 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 5.30 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 5.36 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 5.40 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 5.46 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 5.51 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 5.56 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 5.61 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 5.66 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 5.71 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 5.76 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 5.82 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 5.86 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 5.92 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 5.96 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############                          ] | 35% Completed | 6.02 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 6.07 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[###############                         ] | 38% Completed | 6.12 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 6.17 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################                        ] | 40% Completed | 6.22 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 6.27 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################                        ] | 40% Completed | 6.33 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[#############                           ] | 34% Completed | 6.37 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################                        ] | 40% Completed | 6.43 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############                          ] | 35% Completed | 6.47 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################                        ] | 40% Completed | 6.53 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############                          ] | 35% Completed | 6.57 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################                        ] | 40% Completed | 6.63 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############                          ] | 35% Completed | 6.67 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################                        ] | 40% Completed | 6.73 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############                          ] | 35% Completed | 6.77 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################                      ] | 45% Completed | 6.83 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############                          ] | 35% Completed | 6.87 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################                      ] | 45% Completed | 6.93 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############                          ] | 35% Completed | 6.97 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################                      ] | 45% Completed | 7.03 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################                        ] | 40% Completed | 7.07 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################                      ] | 45% Completed | 7.13 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################                        ] | 40% Completed | 7.17 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################                      ] | 45% Completed | 7.23 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################                        ] | 40% Completed | 7.27 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################                      ] | 45% Completed | 7.33 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################                        ] | 40% Completed | 7.37 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################                      ] | 45% Completed | 7.43 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################                        ] | 40% Completed | 7.47 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################                      ] | 45% Completed | 7.54 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################                        ] | 40% Completed | 7.57 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################                      ] | 45% Completed | 7.64 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################                        ] | 40% Completed | 7.68 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################                      ] | 45% Completed | 7.74 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################                        ] | 40% Completed | 7.78 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################                    ] | 51% Completed | 7.85 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################                        ] | 40% Completed | 7.88 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################                    ] | 51% Completed | 7.95 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################                      ] | 45% Completed | 7.98 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################                    ] | 51% Completed | 8.05 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################                      ] | 45% Completed | 8.08 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[#####################                   ] | 54% Completed | 8.15 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################                      ] | 45% Completed | 8.18 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################                  ] | 55% Completed | 8.25 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################                      ] | 45% Completed | 8.28 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################                  ] | 55% Completed | 8.35 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################                      ] | 45% Completed | 8.38 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################                  ] | 55% Completed | 8.45 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################                      ] | 45% Completed | 8.48 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################                  ] | 55% Completed | 8.55 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################                      ] | 45% Completed | 8.58 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################                  ] | 55% Completed | 8.65 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################                      ] | 45% Completed | 8.68 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################                  ] | 55% Completed | 8.76 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################                    ] | 50% Completed | 8.78 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################                  ] | 55% Completed | 8.86 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################                    ] | 51% Completed | 8.88 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################                  ] | 55% Completed | 8.96 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################                    ] | 51% Completed | 8.98 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########################                ] | 60% Completed | 9.06 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################                    ] | 51% Completed | 9.08 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########################                ] | 61% Completed | 9.16 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################                    ] | 51% Completed | 9.18 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########################                ] | 61% Completed | 9.26 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################                    ] | 51% Completed | 9.29 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########################                ] | 61% Completed | 9.36 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################                    ] | 51% Completed | 9.39 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########################                ] | 61% Completed | 9.46 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[#####################                   ] | 54% Completed | 9.49 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########################                ] | 61% Completed | 9.56 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[#####################                   ] | 54% Completed | 9.59 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########################                ] | 61% Completed | 9.66 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################                  ] | 55% Completed | 9.69 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########################                ] | 61% Completed | 9.76 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################                  ] | 55% Completed | 9.79 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########################              ] | 65% Completed | 9.86 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################                  ] | 55% Completed | 9.89 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########################              ] | 65% Completed | 9.97 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################                  ] | 55% Completed | 9.99 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########################              ] | 65% Completed | 10.07 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################                  ] | 55% Completed | 10.09 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########################              ] | 65% Completed | 10.17 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################                  ] | 55% Completed | 10.19 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########################              ] | 65% Completed | 10.27 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################                  ] | 55% Completed | 10.29 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########################              ] | 65% Completed | 10.37 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################                  ] | 55% Completed | 10.39 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########################              ] | 65% Completed | 10.47 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################                  ] | 55% Completed | 10.49 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############################            ] | 70% Completed | 10.57 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########################                ] | 61% Completed | 10.59 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############################            ] | 71% Completed | 10.67 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########################                ] | 61% Completed | 10.69 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############################            ] | 71% Completed | 10.77 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########################                ] | 61% Completed | 10.80 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############################            ] | 71% Completed | 10.87 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########################                ] | 61% Completed | 10.90 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############################            ] | 71% Completed | 10.97 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########################                ] | 61% Completed | 11.00 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############################            ] | 71% Completed | 11.08 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########################                ] | 61% Completed | 11.10 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############################            ] | 71% Completed | 11.18 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########################                ] | 61% Completed | 11.20 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############################            ] | 71% Completed | 11.28 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########################                ] | 61% Completed | 11.30 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[#############################           ] | 74% Completed | 11.39 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########################              ] | 65% Completed | 11.40 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############################          ] | 75% Completed | 11.49 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########################              ] | 65% Completed | 11.50 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############################          ] | 75% Completed | 11.59 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########################              ] | 65% Completed | 11.60 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############################          ] | 75% Completed | 11.69 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########################              ] | 65% Completed | 11.70 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############################          ] | 75% Completed | 11.79 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########################              ] | 65% Completed | 11.80 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############################          ] | 75% Completed | 11.89 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########################              ] | 65% Completed | 11.90 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############################          ] | 75% Completed | 11.99 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########################              ] | 65% Completed | 12.00 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################################        ] | 80% Completed | 12.09 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########################              ] | 65% Completed | 12.10 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################################        ] | 80% Completed | 12.19 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########################              ] | 65% Completed | 12.20 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################################        ] | 81% Completed | 12.30 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########################              ] | 65% Completed | 12.31 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################################        ] | 81% Completed | 12.40 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########################              ] | 65% Completed | 12.41 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################################        ] | 81% Completed | 12.50 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############################            ] | 71% Completed | 12.51 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################################        ] | 81% Completed | 12.60 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############################            ] | 71% Completed | 12.61 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################################        ] | 81% Completed | 12.70 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############################            ] | 71% Completed | 12.71 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################################        ] | 81% Completed | 12.81 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############################            ] | 71% Completed | 12.81 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################################        ] | 81% Completed | 12.91 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[#############################           ] | 74% Completed | 12.91 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################################        ] | 81% Completed | 13.01 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############################          ] | 75% Completed | 13.01 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################################        ] | 81% Completed | 13.12 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############################          ] | 75% Completed | 13.11 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################################        ] | 81% Completed | 13.22 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############################          ] | 75% Completed | 13.21 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################################      ] | 85% Completed | 13.32 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############################          ] | 75% Completed | 13.32 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################################      ] | 85% Completed | 13.43 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############################          ] | 75% Completed | 13.42 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################################      ] | 85% Completed | 13.53 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############################          ] | 75% Completed | 13.52 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################################    ] | 90% Completed | 13.63 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############################          ] | 75% Completed | 13.62 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################################    ] | 91% Completed | 13.73 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############################          ] | 75% Completed | 13.72 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################################    ] | 91% Completed | 13.83 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############################          ] | 75% Completed | 13.82 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################################    ] | 91% Completed | 13.93 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############################          ] | 75% Completed | 13.92 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################################    ] | 91% Completed | 14.03 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############################          ] | 75% Completed | 14.02 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################################    ] | 91% Completed | 14.14 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############################          ] | 75% Completed | 14.12 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################################    ] | 91% Completed | 14.25 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################################        ] | 82% Completed | 14.22 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################################    ] | 91% Completed | 14.35 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################################        ] | 82% Completed | 14.33 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################################    ] | 91% Completed | 14.45 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################################        ] | 82% Completed | 14.43 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################################    ] | 91% Completed | 14.55 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################################        ] | 82% Completed | 14.53 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[#####################################   ] | 94% Completed | 14.65 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################################        ] | 82% Completed | 14.63 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[#####################################   ] | 94% Completed | 14.75 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[#################################       ] | 84% Completed | 14.73 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################################### ] | 97% Completed | 14.85 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################################      ] | 85% Completed | 14.83 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################################### ] | 97% Completed | 14.96 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################################      ] | 85% Completed | 14.93 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################################### ] | 97% Completed | 15.06 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################################      ] | 85% Completed | 15.03 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################################### ] | 97% Completed | 15.16 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################################      ] | 85% Completed | 15.13 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################################### ] | 97% Completed | 15.26 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################################      ] | 85% Completed | 15.23 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################################### ] | 97% Completed | 15.36 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################################      ] | 85% Completed | 15.34 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################################### ] | 97% Completed | 15.46 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################################      ] | 85% Completed | 15.44 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################################### ] | 97% Completed | 15.56 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################################      ] | 85% Completed | 15.54 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################################### ] | 97% Completed | 15.66 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################################      ] | 85% Completed | 15.64 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################################### ] | 97% Completed | 15.76 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################################      ] | 85% Completed | 15.74 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################################### ] | 98% Completed | 15.86 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################################      ] | 85% Completed | 15.84 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################################### ] | 98% Completed | 15.96 s
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################################      ] | 85% Completed | 15.94 s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################################      ] | 85% Completed | 16.04 s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################################      ] | 85% Completed | 16.14 s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################################    ] | 91% Completed | 16.24 s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################################  ] | 95% Completed | 16.34 s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################################  ] | 95% Completed | 16.45 s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################################  ] | 95% Completed | 16.55 s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################################  ] | 95% Completed | 16.65 s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################################  ] | 95% Completed | 16.75 s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################################  ] | 95% Completed | 16.85 s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################################  ] | 95% Completed | 16.95 s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################################  ] | 95% Completed | 17.05 s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################################  ] | 95% Completed | 17.15 s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################################  ] | 95% Completed | 17.26 s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################################  ] | 95% Completed | 17.36 s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################################  ] | 95% Completed | 17.46 s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################################  ] | 95% Completed | 17.56 s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################################### ] | 97% Completed | 17.66 s
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########################################] | 100% Completed | 17.76 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########################################] | 100% Completed | 16.06 s
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
@@ -1089,8 +1059,8 @@ We have now found <strong>10 scenes</strong> that we can use for our analysis.</
 <h1>Data Visualization<a class="headerlink" href="#data-visualization" title="Link to this heading"><i class="fas fa-link"></i></a></h1>
 <section id="rgb-image">
 <h2>RGB Image<a class="headerlink" href="#rgb-image" title="Link to this heading"><i class="fas fa-link"></i></a></h2>
-<p>As we are now in posession of the image data, we can start with the computations and visualizations.
-First we define a mask to filter out the clouds and the areas with no data and then we can plot a composite median image of the data, which is just an image where each pixel value is the median value of all the scences we have found. This is necessary to get rid of clouds and outliers, which some images may have.</p>
+<p>With the image data now in our possession, we can proceed with computations and visualizations.</p>
+<p>First, we define a mask to exclude cloud cover and areas with missing data. Subsequently, we create a composite median image, where each pixel value represents the median value across all the scenes we have identified. This approach helps to eliminate clouds and outliers present in some of the images, thereby providing a clearer and more representative visualization of the scene.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define a mask for valid pixels (non-cloud)</span>
@@ -1130,7 +1100,12 @@ First we define a mask to filter out the clouds and the areas with no data and t
 </section>
 <section id="ndvi-image">
 <h2>NDVI Image<a class="headerlink" href="#ndvi-image" title="Link to this heading"><i class="fas fa-link"></i></a></h2>
-<p>To get an first impression of the data, we can calculate the NDVI (Normalized Difference Vegetation Index) and plot it. This gives us a good overview of the vegetation in the area. The values can range from -1 to 1 where the following meanings are associated with these values:</p>
+<p>To get an first impression of the data, we can calculate the NDVI (Normalized Difference Vegetation Index) and plot it. The NDVI is calculated by useing the following formula. [&#64;rouse1974monitoring]</p>
+<div class="math notranslate nohighlight">
+\[
+NDVI = \frac{NIR - Red}{NIR + Red}
+\]</div>
+<p>This gives us a good overview of the vegetation in the area. The values can range from -1 to 1 where the following meanings are associated with these values:</p>
 <ul class="simple">
 <li><p>-1 to 0 indicate dead plants or inanimate objects</p></li>
 <li><p>0 to 0.33 are unhealthy plants</p></li>
@@ -1401,12 +1376,12 @@ weighted avg       0.89      0.88      0.88     12105
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/8db51370b0f00f53009eae9650d98ac6f9b82e09ee8661783403e72754312bbc.png" src="../_images/8db51370b0f00f53009eae9650d98ac6f9b82e09ee8661783403e72754312bbc.png" />
+<img alt="../_images/6cf9f7c255da212824515af2350a77d9271191af14773fcd3025c29117e8b79b.png" src="../_images/6cf9f7c255da212824515af2350a77d9271191af14773fcd3025c29117e8b79b.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RANDOM FOREST: 
                precision    recall  f1-score   support
 
          0.0       0.96      0.95      0.95      6618
-         1.0       0.94      0.95      0.94      5487
+         1.0       0.94      0.95      0.95      5487
 
     accuracy                           0.95     12105
    macro avg       0.95      0.95      0.95     12105
@@ -1438,13 +1413,13 @@ weighted avg       0.95      0.95      0.95     12105
   <tbody>
     <tr>
       <th>Actual Negative</th>
-      <td>6294</td>
-      <td>324</td>
+      <td>6301</td>
+      <td>317</td>
     </tr>
     <tr>
       <th>Actual Positive</th>
-      <td>284</td>
-      <td>5203</td>
+      <td>279</td>
+      <td>5208</td>
     </tr>
   </tbody>
 </table>
@@ -1476,7 +1451,7 @@ weighted avg       0.95      0.95      0.95     12105
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/df075454aa301553fdcfeed51b5cd52c304f6150a587e24f080b1e45533f4eaa.png" src="../_images/df075454aa301553fdcfeed51b5cd52c304f6150a587e24f080b1e45533f4eaa.png" />
+<img alt="../_images/7eaff2a99dfd7b5d17eb5ced04ee4957f23d317901b330d2c523f00fdef1905e.png" src="../_images/7eaff2a99dfd7b5d17eb5ced04ee4957f23d317901b330d2c523f00fdef1905e.png" />
 </div>
 </div>
 <p>The areas that both agree upon are the bigger forests, like the <em>Nationalpark Donauauen</em> and the <em>Leithagebirge</em> also the urban areas of vienna have both rightfully not been classified.</p>
@@ -1499,7 +1474,7 @@ weighted avg       0.95      0.95      0.95     12105
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/b95adf9f4b9529ade3e6c7da1ff9282f307aa79efd08c1736763bdc6e50645dc.png" src="../_images/b95adf9f4b9529ade3e6c7da1ff9282f307aa79efd08c1736763bdc6e50645dc.png" />
+<img alt="../_images/456028179f63596b5b2aa71371729cfe0715af979a747c19bd394109968518f7.png" src="../_images/456028179f63596b5b2aa71371729cfe0715af979a747c19bd394109968518f7.png" />
 </div>
 </div>
 <p>When plotting the areas, where classification has happend, individually we can see that the <em>random forest</em> classifiyer falsly predicted the river <em>danube</em> as a forest. On the other hand has the <em>naive bayes</em> classifyer identified a lot of cropland as forest. Finally we can have a look at how big the percentage of forested areas in the scene are. We can see here that around 18% are forest and about 66% are not forest. The remaining areas are not so clear to define, as waterbodies and cropland are both in the remaining categories.</p>
@@ -1523,7 +1498,7 @@ weighted avg       0.95      0.95      0.95     12105
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/e886dbd7a5e2c76e8fd906658686751a3ca3653d5cc36d61245b3c44414809b4.png" src="../_images/e886dbd7a5e2c76e8fd906658686751a3ca3653d5cc36d61245b3c44414809b4.png" />
+<img alt="../_images/b8c74c23f88332940fa5eeee43b6439c6f583ae94a530cf76ce4a6eb06cc6ec6.png" src="../_images/b8c74c23f88332940fa5eeee43b6439c6f583ae94a530cf76ce4a6eb06cc6ec6.png" />
 </div>
 </div>
 </section>
@@ -1560,11 +1535,19 @@ weighted avg       0.95      0.95      0.95     12105
                     
 <div class="prev-next-area">
     <a class="left-prev"
-       href="02_floodmapping.html"
+       href="references.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">References {.unnumbered}</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="02_floodmapping.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title">title: Reverend Bayes updates our Belief in Flood Detection
 subtitle: How an 275 year old idea helps map the extent of floods
 jupyter:
@@ -1572,14 +1555,6 @@ kernelspec:
 name: “02_floodmapping”
 language: “python”
 display_name: “02_floodmapping”</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="references.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">References {.unnumbered}</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1600,7 +1575,18 @@ display_name: “02_floodmapping”</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Data Acquisition</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">title: Classification
+subtitle: Finding forests with satelite imagery
+jupyter:
+kernelspec:
+name: “01_classification”
+language: “python”
+display_name: “01_classification”
+format:
+html:
+code-fold: show
+eval: true</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-acquisition">Data Acquisition</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#searching-catalog">Searching Catalog</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-the-data">Loading the Data</a></li>
 </ul>
