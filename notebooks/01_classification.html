@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>title: Classification author: Pikall Nikolas jupyter: kernelspec: name: “01_classification” language: “python” display_name: “01_classification” &#8212; Project Pythia Cookbook Template</title>
+    <title>Data Acquisition &#8212; Project Pythia Cookbook Template</title>
   
   
   
@@ -79,7 +79,7 @@
     <link rel="prev" title="title: Reverend Bayes updates our Belief in Flood Detection subtitle: How an 275 year old idea helps map the extent of floods jupyter: kernelspec: name: “02_floodmapping” language: “python” display_name: “02_floodmapping”" href="02_floodmapping.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="19 July 2024"/>
+    <meta name="docbuild:last-update" content="24 July 2024"/>
   </head>
   
   
@@ -221,6 +221,10 @@
   
   
 
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
   
 </div>
 
@@ -381,13 +385,9 @@ display_name: “02_floodmapping”</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Classification</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">title: Classification
-author: Pikall Nikolas
-jupyter:
-kernelspec:
-name: “01_classification”
-language: “python”
-display_name: “01_classification”</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Data Acquisition</a></li>
+
+
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul class="nav bd-sidenav">
@@ -421,38 +421,1112 @@ display_name: “01_classification”</a></li>
 <div id="searchbox"></div>
                   <article class="bd-article">
                     
-  <hr class="docutils" />
-<section id="title-classification-author-pikall-nikolas-jupyter-kernelspec-name-01-classification-language-python-display-name-01-classification">
-<h1>title: Classification
-author: Pikall Nikolas
-jupyter:
-kernelspec:
-name: “01_classification”
-language: “python”
-display_name: “01_classification”<a class="headerlink" href="#title-classification-author-pikall-nikolas-jupyter-kernelspec-name-01-classification-language-python-display-name-01-classification" title="Link to this heading"><i class="fas fa-link"></i></a></h1>
+  <p>In this Notebook, we will use <code class="docutils literal notranslate"><span class="pre">Scikit</span> <span class="pre">learn</span></code> to classify an <code class="docutils literal notranslate"><span class="pre">Sentinel-2</span></code> Image. We will use two different classifiers and compare the results.
+To get started we need to import the following modules.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#| echo: true</span>
-<span class="c1">#| code-fold: true</span>
-<span class="c1"># Imports</span>
-<span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+
 <span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
+<span class="kn">import</span> <span class="nn">pystac_client</span>
+<span class="kn">import</span> <span class="nn">stackstac</span>
+<span class="kn">import</span> <span class="nn">odc.stac</span>
+<span class="kn">import</span> <span class="nn">rioxarray</span>
+<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">from</span> <span class="nn">odc.geo.geobox</span> <span class="kn">import</span> <span class="n">GeoBox</span>
+<span class="kn">from</span> <span class="nn">dask.diagnostics</span> <span class="kn">import</span> <span class="n">ProgressBar</span>
+<span class="kn">from</span> <span class="nn">rasterio.enums</span> <span class="kn">import</span> <span class="n">Resampling</span>
+<span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">Polygon</span><span class="p">,</span> <span class="n">mapping</span>
+
 <span class="kn">import</span> <span class="nn">cmcrameri</span> <span class="k">as</span> <span class="nn">cmc</span>
-<span class="kn">import</span> <span class="nn">folium</span>
-<span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">dotenv_values</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
-<span class="kn">from</span> <span class="nn">eodag</span> <span class="kn">import</span> <span class="n">EODataAccessGateway</span><span class="p">,</span> <span class="n">SearchResult</span><span class="p">,</span> <span class="n">setup_logging</span>
-<span class="kn">from</span> <span class="nn">rasterio.crs</span> <span class="kn">import</span> <span class="n">CRS</span>
+<span class="c1"># Scikit Learn</span>
+<span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">GaussianNB</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">confusion_matrix</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
-<span class="c1"># Setup logging</span>
-<span class="n">setup_logging</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">matplotlib.colors</span> <span class="k">as</span> <span class="nn">colors</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Lorum ipsum</p>
+<section id="data-acquisition">
+<h1>Data Acquisition<a class="headerlink" href="#data-acquisition" title="Link to this heading"><i class="fas fa-link"></i></a></h1>
+<p>Before we start, we need to load the data. We will use <code class="docutils literal notranslate"><span class="pre">odc-stac</span></code> to get data from Earth Search by Element 84. Here we define the area of interest and the time frame, aswell as the EPSG code and the resolution.</p>
+<section id="searching-catalog">
+<h2>Searching Catalog<a class="headerlink" href="#searching-catalog" title="Link to this heading"><i class="fas fa-link"></i></a></h2>
+<p>The module <code class="docutils literal notranslate"><span class="pre">odc-stac</span></code> provides access to free, open source Sattelite data. To actually get to the data, we define some parameters, which specify where and when we want Satelite data from. Also we define what data collection we want to get the data from, since there are multiple to choose from. In this example we use <em>multispectral imagery</em> from the Sentinel-2 Satelite.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dx</span> <span class="o">=</span> <span class="mf">0.0006</span>  <span class="c1"># 60m resolution</span>
+<span class="n">epsg</span> <span class="o">=</span> <span class="mi">4326</span>
+
+<span class="c1"># Set Spatial extent</span>
+<span class="n">latmin</span><span class="p">,</span> <span class="n">latmax</span> <span class="o">=</span> <span class="mf">47.86</span><span class="p">,</span> <span class="mf">48.407</span>
+<span class="n">lonmin</span><span class="p">,</span> <span class="n">lonmax</span> <span class="o">=</span> <span class="mf">16.32</span><span class="p">,</span> <span class="mf">16.9</span>
+<span class="n">bounds</span> <span class="o">=</span> <span class="p">(</span><span class="n">lonmin</span><span class="p">,</span> <span class="n">latmin</span><span class="p">,</span> <span class="n">lonmax</span><span class="p">,</span> <span class="n">latmax</span><span class="p">)</span>
+<span class="n">minx</span><span class="p">,</span> <span class="n">miny</span><span class="p">,</span> <span class="n">maxx</span><span class="p">,</span> <span class="n">maxy</span> <span class="o">=</span> <span class="n">bounds</span>
+<span class="n">geom</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;Polygon&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;coordinates&#39;</span><span class="p">:</span> <span class="p">[[</span>
+       <span class="p">[</span><span class="n">minx</span><span class="p">,</span> <span class="n">miny</span><span class="p">],</span>
+       <span class="p">[</span><span class="n">minx</span><span class="p">,</span> <span class="n">maxy</span><span class="p">],</span>
+       <span class="p">[</span><span class="n">maxx</span><span class="p">,</span> <span class="n">maxy</span><span class="p">],</span>
+       <span class="p">[</span><span class="n">maxx</span><span class="p">,</span> <span class="n">miny</span><span class="p">],</span>
+       <span class="p">[</span><span class="n">minx</span><span class="p">,</span> <span class="n">miny</span><span class="p">]</span>
+    <span class="p">]]</span>
+<span class="p">}</span>
+
+<span class="c1"># Set Temporal extent</span>
+<span class="n">year</span> <span class="o">=</span> <span class="mi">2024</span>
+<span class="n">month</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">day</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">delta</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="n">start_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">day</span><span class="p">)</span>
+<span class="n">end_date</span> <span class="o">=</span> <span class="n">start_date</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">delta</span><span class="p">)</span>
+<span class="n">date_query</span> <span class="o">=</span> <span class="n">start_date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">end_date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Search for Sentinel-2 data</span>
+<span class="n">items</span> <span class="o">=</span> <span class="n">pystac_client</span><span class="o">.</span><span class="n">Client</span><span class="o">.</span><span class="n">open</span><span class="p">(</span>
+    <span class="s2">&quot;https://earth-search.aws.element84.com/v1&quot;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+    <span class="n">intersects</span><span class="o">=</span><span class="n">geom</span><span class="p">,</span>
+    <span class="n">collections</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;sentinel-2-l2a&quot;</span><span class="p">],</span>
+    <span class="n">datetime</span><span class="o">=</span><span class="n">date_query</span><span class="p">,</span>
+    <span class="n">limit</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">item_collection</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">),</span> <span class="s1">&#39;scenes found&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10 scenes found
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here we will have a look at the area south-east of Vienna, where the Nationalpark <em>Donauauen</em> is located. The time we are interested in is the beginning of may of 2024.
+After passing these parameters to the <code class="docutils literal notranslate"><span class="pre">stac-catalog</span></code>
+We have now found <strong>10 scenes</strong> that we can use for our analysis.</p>
+</section>
+<section id="loading-the-data">
+<h2>Loading the Data<a class="headerlink" href="#loading-the-data" title="Link to this heading"><i class="fas fa-link"></i></a></h2>
+<p>Now we will load the data directly into an <code class="docutils literal notranslate"><span class="pre">xarray</span></code> dataset, which we can use to perform computations on the data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define a geobox for my region</span>
+<span class="n">geobox</span> <span class="o">=</span> <span class="n">GeoBox</span><span class="o">.</span><span class="n">from_bbox</span><span class="p">(</span><span class="n">bounds</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;epsg:</span><span class="si">{</span><span class="n">epsg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="n">dx</span><span class="p">)</span>
+
+<span class="c1"># lazily combine items</span>
+<span class="n">ds_odc</span> <span class="o">=</span> <span class="n">odc</span><span class="o">.</span><span class="n">stac</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
+    <span class="n">items</span><span class="p">,</span>
+    <span class="n">bands</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;scl&quot;</span><span class="p">,</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="s2">&quot;nir&quot;</span><span class="p">],</span>
+    <span class="n">chunks</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="mi">600</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="mi">600</span><span class="p">},</span>
+    <span class="n">geobox</span><span class="o">=</span><span class="n">geobox</span><span class="p">,</span>
+    <span class="n">resampling</span><span class="o">=</span><span class="s2">&quot;bilinear&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># actually load it</span>
+<span class="k">with</span> <span class="n">ProgressBar</span><span class="p">():</span>
+    <span class="n">ds_odc</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[                                        ] | 0% Completed | 131.06 us
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 103.02 ms
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 203.65 ms
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 304.20 ms
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 404.95 ms
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 505.56 ms
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 615.00 ms
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 724.67 ms
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 825.31 ms
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/miniconda3/envs/01_classification/lib/python3.10/site-packages/rasterio/warp.py:344: NotGeoreferencedWarning: Dataset has no geotransform, gcps, or rpcs. The identity matrix will be returned.
+  _reproject(
+/home/runner/miniconda3/envs/01_classification/lib/python3.10/site-packages/rasterio/warp.py:344: NotGeoreferencedWarning: Dataset has no geotransform, gcps, or rpcs. The identity matrix will be returned.
+  _reproject(
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 925.92 ms
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 1.03 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 1.13 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 1.23 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 1.33 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 1.43 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 1.53 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 1.63 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 1.73 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##                                      ] | 6% Completed | 1.83 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[###                                     ] | 8% Completed | 1.93 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[###                                     ] | 8% Completed | 2.03 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[###                                     ] | 8% Completed | 2.13 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[###                                     ] | 8% Completed | 2.23 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[###                                     ] | 8% Completed | 2.34 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[###                                     ] | 8% Completed | 2.44 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[###                                     ] | 8% Completed | 2.54 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[###                                     ] | 8% Completed | 2.64 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####                                    ] | 10% Completed | 2.74 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####                                    ] | 10% Completed | 2.84 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####                                    ] | 10% Completed | 2.94 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[#####                                   ] | 14% Completed | 3.04 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[#####                                   ] | 14% Completed | 3.15 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######                                  ] | 15% Completed | 3.25 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######                                  ] | 15% Completed | 3.35 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 3.45 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 3.55 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 3.65 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 3.75 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 3.85 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 3.95 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 4.05 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 4.15 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 4.25 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 4.35 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 4.45 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 4.56 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 4.66 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 4.76 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########                                ] | 20% Completed | 4.86 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[###########                             ] | 28% Completed | 4.96 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[###########                             ] | 28% Completed | 5.06 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 5.16 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 5.26 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 5.36 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 5.46 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 5.56 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 5.66 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 5.76 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 5.86 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 5.96 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 6.07 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 6.17 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############                            ] | 30% Completed | 6.27 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[#############                           ] | 34% Completed | 6.37 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############                          ] | 35% Completed | 6.47 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############                          ] | 35% Completed | 6.57 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############                          ] | 35% Completed | 6.67 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############                          ] | 35% Completed | 6.77 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############                          ] | 35% Completed | 6.87 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############                          ] | 35% Completed | 6.97 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################                        ] | 40% Completed | 7.07 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################                        ] | 40% Completed | 7.17 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################                        ] | 40% Completed | 7.27 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################                        ] | 40% Completed | 7.37 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################                        ] | 40% Completed | 7.47 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################                        ] | 40% Completed | 7.57 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################                        ] | 40% Completed | 7.68 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################                        ] | 40% Completed | 7.78 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################                        ] | 40% Completed | 7.88 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################                      ] | 45% Completed | 7.98 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################                      ] | 45% Completed | 8.08 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################                      ] | 45% Completed | 8.18 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################                      ] | 45% Completed | 8.28 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################                      ] | 45% Completed | 8.38 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################                      ] | 45% Completed | 8.48 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################                      ] | 45% Completed | 8.58 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################                      ] | 45% Completed | 8.68 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################                    ] | 50% Completed | 8.78 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################                    ] | 51% Completed | 8.88 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################                    ] | 51% Completed | 8.98 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################                    ] | 51% Completed | 9.08 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################                    ] | 51% Completed | 9.18 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################                    ] | 51% Completed | 9.29 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################                    ] | 51% Completed | 9.39 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[#####################                   ] | 54% Completed | 9.49 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[#####################                   ] | 54% Completed | 9.59 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################                  ] | 55% Completed | 9.69 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################                  ] | 55% Completed | 9.79 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################                  ] | 55% Completed | 9.89 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################                  ] | 55% Completed | 9.99 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################                  ] | 55% Completed | 10.09 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################                  ] | 55% Completed | 10.19 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################                  ] | 55% Completed | 10.29 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################                  ] | 55% Completed | 10.39 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################                  ] | 55% Completed | 10.49 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########################                ] | 61% Completed | 10.59 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########################                ] | 61% Completed | 10.69 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########################                ] | 61% Completed | 10.80 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########################                ] | 61% Completed | 10.90 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########################                ] | 61% Completed | 11.00 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########################                ] | 61% Completed | 11.10 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########################                ] | 61% Completed | 11.20 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########################                ] | 61% Completed | 11.30 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########################              ] | 65% Completed | 11.40 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########################              ] | 65% Completed | 11.50 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########################              ] | 65% Completed | 11.60 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########################              ] | 65% Completed | 11.70 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########################              ] | 65% Completed | 11.80 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########################              ] | 65% Completed | 11.90 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########################              ] | 65% Completed | 12.00 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########################              ] | 65% Completed | 12.10 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########################              ] | 65% Completed | 12.20 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########################              ] | 65% Completed | 12.31 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##########################              ] | 65% Completed | 12.41 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############################            ] | 71% Completed | 12.51 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############################            ] | 71% Completed | 12.61 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############################            ] | 71% Completed | 12.71 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[############################            ] | 71% Completed | 12.81 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[#############################           ] | 74% Completed | 12.91 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############################          ] | 75% Completed | 13.01 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############################          ] | 75% Completed | 13.11 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############################          ] | 75% Completed | 13.21 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############################          ] | 75% Completed | 13.32 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############################          ] | 75% Completed | 13.42 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############################          ] | 75% Completed | 13.52 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############################          ] | 75% Completed | 13.62 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############################          ] | 75% Completed | 13.72 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############################          ] | 75% Completed | 13.82 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############################          ] | 75% Completed | 13.92 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############################          ] | 75% Completed | 14.02 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##############################          ] | 75% Completed | 14.12 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################################        ] | 82% Completed | 14.22 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################################        ] | 82% Completed | 14.33 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################################        ] | 82% Completed | 14.43 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################################        ] | 82% Completed | 14.53 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[################################        ] | 82% Completed | 14.63 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[#################################       ] | 84% Completed | 14.73 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################################      ] | 85% Completed | 14.83 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################################      ] | 85% Completed | 14.93 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################################      ] | 85% Completed | 15.03 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################################      ] | 85% Completed | 15.13 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################################      ] | 85% Completed | 15.23 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################################      ] | 85% Completed | 15.34 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################################      ] | 85% Completed | 15.44 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################################      ] | 85% Completed | 15.54 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################################      ] | 85% Completed | 15.64 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################################      ] | 85% Completed | 15.74 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################################      ] | 85% Completed | 15.84 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################################      ] | 85% Completed | 15.94 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################################      ] | 85% Completed | 16.04 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[##################################      ] | 85% Completed | 16.14 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################################    ] | 91% Completed | 16.24 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################################  ] | 95% Completed | 16.34 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################################  ] | 95% Completed | 16.45 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################################  ] | 95% Completed | 16.55 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################################  ] | 95% Completed | 16.65 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################################  ] | 95% Completed | 16.75 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################################  ] | 95% Completed | 16.85 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################################  ] | 95% Completed | 16.95 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################################  ] | 95% Completed | 17.05 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################################  ] | 95% Completed | 17.15 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################################  ] | 95% Completed | 17.26 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################################  ] | 95% Completed | 17.36 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################################  ] | 95% Completed | 17.46 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[######################################  ] | 95% Completed | 17.56 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[####################################### ] | 97% Completed | 17.66 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[########################################] | 100% Completed | 17.76 s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="data-visualization">
+<h1>Data Visualization<a class="headerlink" href="#data-visualization" title="Link to this heading"><i class="fas fa-link"></i></a></h1>
+<section id="rgb-image">
+<h2>RGB Image<a class="headerlink" href="#rgb-image" title="Link to this heading"><i class="fas fa-link"></i></a></h2>
+<p>As we are now in posession of the image data, we can start with the computations and visualizations.
+First we define a mask to filter out the clouds and the areas with no data and then we can plot a composite median image of the data, which is just an image where each pixel value is the median value of all the scences we have found. This is necessary to get rid of clouds and outliers, which some images may have.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define a mask for valid pixels (non-cloud)</span>
+<span class="k">def</span> <span class="nf">is_valid_pixel</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="c1"># include only vegetated, not_vegitated, water, and snow</span>
+    <span class="k">return</span> <span class="p">((</span><span class="n">data</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span> <span class="o">&lt;</span> <span class="mi">7</span><span class="p">))</span> <span class="o">|</span> <span class="p">(</span><span class="n">data</span><span class="o">==</span><span class="mi">11</span><span class="p">)</span>
+
+<span class="n">ds_odc</span><span class="p">[</span><span class="s1">&#39;valid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">is_valid_pixel</span><span class="p">(</span><span class="n">ds_odc</span><span class="o">.</span><span class="n">scl</span><span class="p">)</span>
+<span class="c1">#ds_odc.valid.sum(&quot;time&quot;).plot()</span>
+
+<span class="k">def</span> <span class="nf">avg</span><span class="p">(</span><span class="n">ds</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">ds</span> <span class="o">/</span> <span class="n">ds</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># compute the masked median</span>
+<span class="n">rgb_median</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">ds_odc</span><span class="p">[[</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">]]</span>
+    <span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">ds_odc</span><span class="o">.</span><span class="n">valid</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">to_dataarray</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s2">&quot;band&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="s2">&quot;band&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">rgb_comp</span> <span class="o">=</span> <span class="n">avg</span><span class="p">(</span><span class="n">rgb_median</span><span class="p">)</span>
+<span class="n">plot</span> <span class="o">=</span> <span class="n">rgb_comp</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">rgb</span><span class="o">=</span><span class="s2">&quot;band&quot;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">plot</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;RGB - Median Composite</span><span class="se">\n</span><span class="si">{</span><span class="n">start_date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">.%m.%Y&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">end_date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">.%m.%Y&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers). Got range [-2593019971002186.0..2.0].
+</pre></div>
+</div>
+<img alt="../_images/f7c9af5202bd8e478ac9e5be05bc91495a2d1cda6edaf11c8e3fd4103c145cdd.png" src="../_images/f7c9af5202bd8e478ac9e5be05bc91495a2d1cda6edaf11c8e3fd4103c145cdd.png" />
+</div>
+</div>
+</section>
+<section id="ndvi-image">
+<h2>NDVI Image<a class="headerlink" href="#ndvi-image" title="Link to this heading"><i class="fas fa-link"></i></a></h2>
+<p>To get an first impression of the data, we can calculate the NDVI (Normalized Difference Vegetation Index) and plot it. This gives us a good overview of the vegetation in the area. The values can range from -1 to 1 where the following meanings are associated with these values:</p>
+<ul class="simple">
+<li><p>-1 to 0 indicate dead plants or inanimate objects</p></li>
+<li><p>0 to 0.33 are unhealthy plants</p></li>
+<li><p>0.33 to 0.66 are moderatly healthy plants</p></li>
+<li><p>0.66 to 1 are very healthy plants</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Normalized Difference Vegetation Index (NDVI)</span>
+<span class="k">def</span> <span class="nf">normalized_difference</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="o">*</span><span class="mf">1.</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+
+<span class="n">ndvi</span> <span class="o">=</span> <span class="n">normalized_difference</span><span class="p">(</span><span class="n">ds_odc</span><span class="o">.</span><span class="n">nir</span><span class="p">,</span> <span class="n">ds_odc</span><span class="o">.</span><span class="n">red</span><span class="p">)</span>
+<span class="n">ndvi</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;cmc.cork&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;NDVI&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/af802a066db0e9b5b296e710fda262ce5068955d0847163da4c76d49ad6c08a2.png" src="../_images/af802a066db0e9b5b296e710fda262ce5068955d0847163da4c76d49ad6c08a2.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="classification">
+<h1>Classification<a class="headerlink" href="#classification" title="Link to this heading"><i class="fas fa-link"></i></a></h1>
+<section id="regions-of-interest">
+<h2>Regions of Interest<a class="headerlink" href="#regions-of-interest" title="Link to this heading"><i class="fas fa-link"></i></a></h2>
+<p>Since this is a supervised classification, we need to have some training data. Therefore we need to define areas or regions, which we are certain represent the feature which we are classifiying. In this case we are looking for forested areas and areas that are definitly not forested. We will use these to train our classifiers.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define Polygons</span>
+<span class="n">forest_areas</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">0</span><span class="p">:</span> <span class="p">[</span><span class="n">Polygon</span><span class="p">([(</span><span class="mf">16.482772</span><span class="p">,</span> <span class="mf">47.901753</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.465133</span><span class="p">,</span> <span class="mf">47.870124</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.510142</span><span class="p">,</span> <span class="mf">47.874382</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.482772</span><span class="p">,</span> <span class="mf">47.901753</span><span class="p">)])],</span>
+    <span class="mi">1</span><span class="p">:</span> <span class="p">[</span><span class="n">Polygon</span><span class="p">([(</span><span class="mf">16.594079</span><span class="p">,</span> <span class="mf">47.938855</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.581914</span><span class="p">,</span> <span class="mf">47.894454</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.620233</span><span class="p">,</span> <span class="mf">47.910268</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.594079</span><span class="p">,</span> <span class="mf">47.938855</span><span class="p">)])],</span>
+    <span class="mi">2</span><span class="p">:</span> <span class="p">[</span><span class="n">Polygon</span><span class="p">([(</span><span class="mf">16.67984</span><span class="p">,</span> <span class="mf">47.978998</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.637263</span><span class="p">,</span> <span class="mf">47.971091</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.660376</span><span class="p">,</span> <span class="mf">47.929123</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.67984</span><span class="p">,</span> <span class="mf">47.978998</span><span class="p">)])],</span>
+    <span class="mi">3</span><span class="p">:</span> <span class="p">[</span><span class="n">Polygon</span><span class="p">([(</span><span class="mf">16.756477</span><span class="p">,</span> <span class="mf">48.000286</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.723024</span><span class="p">,</span> <span class="mf">47.983256</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.739446</span><span class="p">,</span> <span class="mf">47.972916</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.756477</span><span class="p">,</span> <span class="mf">48.000286</span><span class="p">)])],</span>
+    <span class="mi">4</span><span class="p">:</span> <span class="p">[</span><span class="n">Polygon</span><span class="p">([(</span><span class="mf">16.80696</span><span class="p">,</span> <span class="mf">48.135923</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.780806</span><span class="p">,</span> <span class="mf">48.125583</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.798445</span><span class="p">,</span> <span class="mf">48.115243</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.80696</span><span class="p">,</span> <span class="mf">48.135923</span><span class="p">)])],</span>
+    <span class="mi">5</span><span class="p">:</span> <span class="p">[</span><span class="n">Polygon</span><span class="p">([(</span><span class="mf">16.684097</span><span class="p">,</span> <span class="mf">48.144438</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.664634</span><span class="p">,</span> <span class="mf">48.124366</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.690788</span><span class="p">,</span> <span class="mf">48.118892</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.684097</span><span class="p">,</span> <span class="mf">48.144438</span><span class="p">)])],</span>
+    <span class="mi">6</span><span class="p">:</span> <span class="p">[</span><span class="n">Polygon</span><span class="p">([(</span><span class="mf">16.550894</span><span class="p">,</span> <span class="mf">48.169984</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.530822</span><span class="p">,</span> <span class="mf">48.165118</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.558801</span><span class="p">,</span> <span class="mf">48.137139</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.550894</span><span class="p">,</span> <span class="mf">48.169984</span><span class="p">)])],</span>
+    <span class="mi">7</span><span class="p">:</span> <span class="p">[</span><span class="n">Polygon</span><span class="p">([(</span><span class="mf">16.588604</span><span class="p">,</span> <span class="mf">48.402329</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.556976</span><span class="p">,</span> <span class="mf">48.401112</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.580697</span><span class="p">,</span> <span class="mf">48.382865</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.588604</span><span class="p">,</span> <span class="mf">48.402329</span><span class="p">)])],</span>
+<span class="p">}</span>
+
+<span class="n">nonforest_areas</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">0</span><span class="p">:</span> <span class="p">[</span><span class="n">Polygon</span><span class="p">([(</span><span class="mf">16.674974</span><span class="p">,</span> <span class="mf">48.269126</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.623882</span><span class="p">,</span> <span class="mf">48.236281</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.682272</span><span class="p">,</span> <span class="mf">48.213168</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.674974</span><span class="p">,</span> <span class="mf">48.269126</span><span class="p">)])],</span>
+    <span class="mi">1</span><span class="p">:</span> <span class="p">[</span><span class="n">Polygon</span><span class="p">([(</span><span class="mf">16.375723</span><span class="p">,</span> <span class="mf">48.228374</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.357476</span><span class="p">,</span> <span class="mf">48.188839</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.399444</span><span class="p">,</span> <span class="mf">48.185798</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.375723</span><span class="p">,</span> <span class="mf">48.228374</span><span class="p">)])],</span>
+    <span class="mi">2</span><span class="p">:</span> <span class="p">[</span><span class="n">Polygon</span><span class="p">([(</span><span class="mf">16.457834</span><span class="p">,</span> <span class="mf">48.26426</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.418907</span><span class="p">,</span> <span class="mf">48.267301</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.440804</span><span class="p">,</span> <span class="mf">48.23324</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.457834</span><span class="p">,</span> <span class="mf">48.26426</span><span class="p">)])],</span>
+    <span class="mi">3</span><span class="p">:</span> <span class="p">[</span><span class="n">Polygon</span><span class="p">([(</span><span class="mf">16.519266</span><span class="p">,</span> <span class="mf">48.101861</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.470607</span><span class="p">,</span> <span class="mf">48.100645</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.500411</span><span class="p">,</span> <span class="mf">48.07145</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.519266</span><span class="p">,</span> <span class="mf">48.101861</span><span class="p">)])],</span>
+    <span class="mi">4</span><span class="p">:</span> <span class="p">[</span><span class="n">Polygon</span><span class="p">([(</span><span class="mf">16.453577</span><span class="p">,</span> <span class="mf">48.051986</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.412217</span><span class="p">,</span> <span class="mf">48.067192</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.425598</span><span class="p">,</span> <span class="mf">48.012451</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.453577</span><span class="p">,</span> <span class="mf">48.051986</span><span class="p">)])],</span>
+<span class="p">}</span>
+
+<span class="c1"># Geoppandas Dataframe from Polygons</span>
+<span class="n">forest_df</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">({</span><span class="s1">&#39;geometry&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">poly</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">poly</span> <span class="ow">in</span> <span class="n">forest_areas</span><span class="o">.</span><span class="n">values</span><span class="p">()]},</span> <span class="n">crs</span><span class="o">=</span><span class="s2">&quot;EPSG:4326&quot;</span><span class="p">)</span>
+<span class="n">nonforest_df</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">({</span><span class="s1">&#39;geometry&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">poly</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">poly</span> <span class="ow">in</span> <span class="n">nonforest_areas</span><span class="o">.</span><span class="n">values</span><span class="p">()]},</span> <span class="n">crs</span><span class="o">=</span><span class="s2">&quot;EPSG:4326&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># Plotting Regions of Interest</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">rgb_comp</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">forest_df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">,</span> <span class="n">fc</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">nonforest_df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">,</span> <span class="n">fc</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Regions of Interest&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers). Got range [-2593019971002186.0..2.0].
+</pre></div>
+</div>
+<img alt="../_images/88c9fbc3b933533b0b16899462ce4e582b54f862dee2a6fe2aa71a46e58686d9.png" src="../_images/88c9fbc3b933533b0b16899462ce4e582b54f862dee2a6fe2aa71a46e58686d9.png" />
+</div>
+</div>
+</section>
+<section id="data-preparation">
+<h2>Data Preparation<a class="headerlink" href="#data-preparation" title="Link to this heading"><i class="fas fa-link"></i></a></h2>
+<p>Additionally to the Regions of Interest we will extract the bands that we want to use for the classification from the loaded Dataset. With that we will create a Training and Testing Dataset, which we will train the classifier on.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Classifiying dataset (only necessary bands)</span>
+<span class="n">bands</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="s1">&#39;nir&#39;</span><span class="p">]</span>
+<span class="n">ds_class</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">ds_odc</span><span class="p">[</span><span class="n">bands</span><span class="p">]</span>
+    <span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">ds_odc</span><span class="o">.</span><span class="n">valid</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">ds_class</span> <span class="o">=</span> <span class="n">avg</span><span class="p">(</span><span class="n">ds_class</span><span class="p">)</span>
+<span class="n">ds_class</span> <span class="o">=</span> <span class="n">ds_class</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">clip_array</span><span class="p">(</span><span class="n">ds</span><span class="p">:</span><span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">polygons</span><span class="p">):</span>
+    <span class="n">clipped</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">polygons</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">all_touched</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">clipped_nan</span> <span class="o">=</span> <span class="n">clipped</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">clipped</span> <span class="o">==</span> <span class="n">ds</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">clipped_nan</span>
+
+<span class="c1"># Dictionaries with Dataarrays, each clipped by a Polygon</span>
+<span class="n">data_dict_feat</span> <span class="o">=</span> <span class="p">{</span><span class="n">idx</span><span class="p">:</span> <span class="n">clip_array</span><span class="p">(</span><span class="n">ds_class</span><span class="p">,</span> <span class="n">polygon</span><span class="p">)</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">polygon</span> <span class="ow">in</span> <span class="n">forest_areas</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+<span class="n">data_dict_nonfeat</span> <span class="o">=</span> <span class="p">{</span><span class="n">idx</span><span class="p">:</span> <span class="n">clip_array</span><span class="p">(</span><span class="n">ds_class</span><span class="p">,</span> <span class="n">polygon</span><span class="p">)</span>  <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">polygon</span> <span class="ow">in</span> <span class="n">nonforest_areas</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+<span class="c1"># Reshape the polygon dataarrays to get a tuple (one value per band) of pixel values</span>
+<span class="n">feat_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">xarray</span><span class="o">.</span><span class="n">to_array</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">bands</span><span class="p">),</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span> <span class="k">for</span> <span class="n">xarray</span> <span class="ow">in</span> <span class="n">data_dict_feat</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span> <span class="c1"># replaced median_data_dict_feat with data_dict_feat</span>
+<span class="n">nonfeat_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">xarray</span><span class="o">.</span><span class="n">to_array</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">bands</span><span class="p">),</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span> <span class="k">for</span> <span class="n">xarray</span> <span class="ow">in</span> <span class="n">data_dict_nonfeat</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span> <span class="c1"># replaced median_data_dict_feat with data_dict_feat</span>
+
+<span class="c1"># The rows of the different polygons are concatenated to a single array for further processing</span>
+<span class="n">feat_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">feat_data</span><span class="p">)</span>
+<span class="n">nonfeat_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">nonfeat_data</span><span class="p">)</span>
+
+<span class="c1"># Drop Nan Values</span>
+<span class="n">X_feat_data</span> <span class="o">=</span> <span class="n">feat_values</span><span class="p">[</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">feat_values</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)]</span>
+<span class="n">X_nonfeat_data</span> <span class="o">=</span> <span class="n">nonfeat_values</span><span class="p">[</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">nonfeat_values</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)]</span>
+
+<span class="c1"># Creating Output Vector (1 for pixel is features; 0 for pixel is not feature)</span>
+<span class="n">y_feat_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">X_feat_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">y_nonfeat_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">X_nonfeat_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># Concatnate all Classes for training </span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">X_feat_data</span><span class="p">,</span> <span class="n">X_nonfeat_data</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">y_feat_data</span><span class="p">,</span> <span class="n">y_nonfeat_data</span><span class="p">])</span>
+
+<span class="c1"># Split into Training and Testing Data.</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now that we have the training and testing data, we create an Image array of the actual scene which we want to classify.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">image_data</span> <span class="o">=</span> <span class="n">ds_class</span><span class="p">[</span><span class="n">bands</span><span class="p">]</span><span class="o">.</span><span class="n">to_array</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s1">&#39;band&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="s1">&#39;latitude&#39;</span><span class="p">,</span> <span class="s1">&#39;longitude&#39;</span><span class="p">,</span> <span class="s1">&#39;band&#39;</span><span class="p">)</span>
+
+<span class="c1"># Reshape the image data</span>
+<span class="n">num_of_pixels</span> <span class="o">=</span> <span class="n">ds_class</span><span class="o">.</span><span class="n">sizes</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">ds_class</span><span class="o">.</span><span class="n">sizes</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">]</span>
+<span class="n">num_of_bands</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">bands</span><span class="p">)</span>
+<span class="n">X_image_data</span> <span class="o">=</span> <span class="n">image_data</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">num_of_pixels</span><span class="p">,</span> <span class="n">num_of_bands</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="classifiying-with-naive-bayes">
+<h2>Classifiying with Naive Bayes<a class="headerlink" href="#classifiying-with-naive-bayes" title="Link to this heading"><i class="fas fa-link"></i></a></h2>
+<p>Now that we have prepared all the needed data, we can start to classify the image.</p>
+<p>We will start with a <em>Naive Bayes</em> classificator. We train the classificator on our Training data and apply it on the actual image.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Naive Bayes initialization and training</span>
+<span class="n">nb</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">()</span>
+<span class="n">nb_test</span> <span class="o">=</span> <span class="n">nb</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">nb_predict</span> <span class="o">=</span> <span class="n">nb</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="c1"># Prediction on image</span>
+<span class="n">nb_predict_img</span> <span class="o">=</span> <span class="n">nb</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_image_data</span><span class="p">)</span>
+<span class="n">nb_predict_img</span> <span class="o">=</span> <span class="n">nb_predict_img</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">ds_class</span><span class="o">.</span><span class="n">sizes</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">],</span> <span class="n">ds_class</span><span class="o">.</span><span class="n">sizes</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">])</span>
+
+<span class="c1"># Adding the Naive Bayes Prediction to the dataset</span>
+<span class="n">ds_class</span><span class="p">[</span><span class="s1">&#39;NB-forest&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">nb_predict_img</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">,</span> <span class="s1">&#39;longitude&#39;</span><span class="p">],</span> <span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;longitude&#39;</span><span class="p">:</span> <span class="n">ds_class</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">],</span> <span class="s1">&#39;latitude&#39;</span><span class="p">:</span> <span class="n">ds_class</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">]})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To see how well the classification has worked we plot the image that has been predicted by the classifier. Furthermore we can have a look at the <code class="docutils literal notranslate"><span class="pre">Classification</span> <span class="pre">Report</span></code> and the <code class="docutils literal notranslate"><span class="pre">Confusion</span> <span class="pre">Matrix</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot Naive Bayes</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mi">1</span>	
+<span class="n">cmap_green</span> <span class="o">=</span> <span class="n">colors</span><span class="o">.</span><span class="n">ListedColormap</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">alpha</span><span class="p">),</span> <span class="s1">&#39;green&#39;</span><span class="p">])</span>
+
+<span class="n">plot</span> <span class="o">=</span> <span class="n">ds_class</span><span class="p">[</span><span class="s1">&#39;NB-forest&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmap_green</span><span class="p">,</span> <span class="n">cbar_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;ticks&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.25</span><span class="p">,</span><span class="mf">0.75</span><span class="p">]})</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">colorbar</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">set_ticklabels</span><span class="p">([</span><span class="s1">&#39;non-forest&#39;</span><span class="p">,</span> <span class="s1">&#39;forest&#39;</span><span class="p">])</span>
+<span class="n">plot</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Naive Bayes Classification&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Print the Classification report</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;NAIVE BAYES: </span><span class="se">\n</span><span class="s2"> &quot;</span><span class="o">+</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">nb_predict</span><span class="p">))</span>
+
+<span class="c1"># Print the confusion matrix</span>
+<span class="n">con_mat_nb</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">nb_predict</span><span class="p">),</span> 
+                  <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Actual Negative&#39;</span><span class="p">,</span> <span class="s1">&#39;Actual Positive&#39;</span><span class="p">],</span> 
+                  <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Predicted Negative&#39;</span><span class="p">,</span> <span class="s1">&#39;Predicted Positive&#39;</span><span class="p">])</span>
+<span class="n">display</span><span class="p">(</span><span class="n">con_mat_nb</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/9b869c98969769678ca3f7be63f2d259a92ef195464b3d70c6926f2497d47098.png" src="../_images/9b869c98969769678ca3f7be63f2d259a92ef195464b3d70c6926f2497d47098.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NAIVE BAYES: 
+               precision    recall  f1-score   support
+
+         0.0       0.95      0.82      0.88      6618
+         1.0       0.81      0.95      0.88      5487
+
+    accuracy                           0.88     12105
+   macro avg       0.88      0.88      0.88     12105
+weighted avg       0.89      0.88      0.88     12105
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Predicted Negative</th>
+      <th>Predicted Positive</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Actual Negative</th>
+      <td>5406</td>
+      <td>1212</td>
+    </tr>
+    <tr>
+      <th>Actual Positive</th>
+      <td>276</td>
+      <td>5211</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="classifiying-with-random-forest">
+<h2>Classifiying with Random Forest<a class="headerlink" href="#classifiying-with-random-forest" title="Link to this heading"><i class="fas fa-link"></i></a></h2>
+<p>To not only rely on one classificator lets have a look at another one. Here we use the <em>Random Forest</em> Classificator. The Procedure useing it is the same as before.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Random Forest initialization and training</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">rf_test</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">rf_predict</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="c1"># Prediction on image</span>
+<span class="n">rf_predict_img</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_image_data</span><span class="p">)</span>
+<span class="n">rf_predict_img</span> <span class="o">=</span> <span class="n">rf_predict_img</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">ds_class</span><span class="o">.</span><span class="n">sizes</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">],</span> <span class="n">ds_class</span><span class="o">.</span><span class="n">sizes</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">])</span>
+
+<span class="c1"># Adding the Random Forest Prediction to the dataset</span>
+<span class="n">ds_class</span><span class="p">[</span><span class="s1">&#39;RF-forest&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">rf_predict_img</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">,</span> <span class="s1">&#39;longitude&#39;</span><span class="p">],</span> <span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;longitude&#39;</span><span class="p">:</span> <span class="n">ds_class</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">],</span> <span class="s1">&#39;latitude&#39;</span><span class="p">:</span> <span class="n">ds_class</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">]})</span>
+
+<span class="n">plot</span> <span class="o">=</span> <span class="n">ds_class</span><span class="p">[</span><span class="s1">&#39;RF-forest&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmap_green</span><span class="p">,</span> <span class="n">cbar_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;ticks&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.25</span><span class="p">,</span><span class="mf">0.75</span><span class="p">]})</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">colorbar</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">set_ticklabels</span><span class="p">([</span><span class="s1">&#39;non-forest&#39;</span><span class="p">,</span> <span class="s1">&#39;forest&#39;</span><span class="p">])</span>
+<span class="n">plot</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Random Forest Classification&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Print the Classification report</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;RANDOM FOREST: </span><span class="se">\n</span><span class="s2"> &quot;</span><span class="o">+</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">rf_predict</span><span class="p">))</span>
+
+<span class="c1"># Print the confusion matrix</span>
+<span class="n">con_mat_rf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">rf_predict</span><span class="p">),</span> 
+                  <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Actual Negative&#39;</span><span class="p">,</span> <span class="s1">&#39;Actual Positive&#39;</span><span class="p">],</span> 
+                  <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Predicted Negative&#39;</span><span class="p">,</span> <span class="s1">&#39;Predicted Positive&#39;</span><span class="p">])</span>
+<span class="n">display</span><span class="p">(</span><span class="n">con_mat_rf</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/8db51370b0f00f53009eae9650d98ac6f9b82e09ee8661783403e72754312bbc.png" src="../_images/8db51370b0f00f53009eae9650d98ac6f9b82e09ee8661783403e72754312bbc.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RANDOM FOREST: 
+               precision    recall  f1-score   support
+
+         0.0       0.96      0.95      0.95      6618
+         1.0       0.94      0.95      0.94      5487
+
+    accuracy                           0.95     12105
+   macro avg       0.95      0.95      0.95     12105
+weighted avg       0.95      0.95      0.95     12105
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Predicted Negative</th>
+      <th>Predicted Positive</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Actual Negative</th>
+      <td>6294</td>
+      <td>324</td>
+    </tr>
+    <tr>
+      <th>Actual Positive</th>
+      <td>284</td>
+      <td>5203</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We can already see from the <code class="docutils literal notranslate"><span class="pre">classification</span> <span class="pre">reports</span></code> and the <code class="docutils literal notranslate"><span class="pre">confusion</span> <span class="pre">matrices</span></code> that the <em>random forest</em> classifier has performed better. This is for example indicated by the lower values in the secondary diagonal, which means that False Positvies and Negatives are only minimal. It seems that <em>Naive Bayes</em> is more sensitive to False Positives.</p>
+</section>
+<section id="comparison-of-the-classificators">
+<h2>Comparison of the Classificators<a class="headerlink" href="#comparison-of-the-classificators" title="Link to this heading"><i class="fas fa-link"></i></a></h2>
+<p>To have a more in depth look at the performance of the classificators, we can compare them. Lets see what areas both classificators agree upon, and which areas then don’t agree upon.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#| code-fold: true</span>
+<span class="n">cmap_trio</span> <span class="o">=</span> <span class="n">colors</span><span class="o">.</span><span class="n">ListedColormap</span><span class="p">([</span><span class="s1">&#39;whitesmoke&#39;</span> <span class="p">,</span><span class="s1">&#39;indianred&#39;</span><span class="p">,</span> <span class="s1">&#39;goldenrod&#39;</span><span class="p">,</span> <span class="s1">&#39;darkgreen&#39;</span><span class="p">])</span>
+
+
+<span class="n">double_clf</span> <span class="o">=</span> <span class="p">(</span><span class="n">ds_class</span><span class="p">[</span><span class="s1">&#39;NB-forest&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">ds_class</span><span class="p">[</span><span class="s1">&#39;RF-forest&#39;</span><span class="p">])</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">cax</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">double_clf</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap_trio</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+
+<span class="c1"># Add a colorbar with custom tick labels</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">cax</span><span class="p">,</span> <span class="n">ticks</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="o">*</span><span class="mf">0.375</span><span class="p">,</span> <span class="mi">3</span><span class="o">*</span><span class="mf">0.375</span><span class="p">,</span> <span class="mi">5</span><span class="o">*</span><span class="mf">0.375</span><span class="p">,</span> <span class="mi">7</span><span class="o">*</span><span class="mf">0.375</span><span class="p">])</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([</span><span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="s1">&#39;Naive Bayes&#39;</span><span class="p">,</span> <span class="s1">&#39;Random Forest&#39;</span><span class="p">,</span> <span class="s1">&#39;Both&#39;</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Classification Comparisson&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/df075454aa301553fdcfeed51b5cd52c304f6150a587e24f080b1e45533f4eaa.png" src="../_images/df075454aa301553fdcfeed51b5cd52c304f6150a587e24f080b1e45533f4eaa.png" />
+</div>
+</div>
+<p>The areas that both agree upon are the bigger forests, like the <em>Nationalpark Donauauen</em> and the <em>Leithagebirge</em> also the urban areas of vienna have both rightfully not been classified.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#| code-fold: true</span>
+<span class="c1"># Plot only one class, either None (0), Naive Bayes (1), Random Forest (2), or Both (3)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">axs</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">double_clf</span><span class="o">==</span><span class="n">i</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;cmc.oleron_r&#39;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+    <span class="n">category</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;by None&#39;</span><span class="p">,</span> <span class="s1">&#39;only by Naive Bayes&#39;</span><span class="p">,</span> <span class="s1">&#39;only by Random Forest&#39;</span><span class="p">,</span> <span class="s1">&#39;by Both&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Areas classified &#39;</span> <span class="o">+</span> <span class="n">category</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/b95adf9f4b9529ade3e6c7da1ff9282f307aa79efd08c1736763bdc6e50645dc.png" src="../_images/b95adf9f4b9529ade3e6c7da1ff9282f307aa79efd08c1736763bdc6e50645dc.png" />
+</div>
+</div>
+<p>When plotting the areas, where classification has happend, individually we can see that the <em>random forest</em> classifiyer falsly predicted the river <em>danube</em> as a forest. On the other hand has the <em>naive bayes</em> classifyer identified a lot of cropland as forest. Finally we can have a look at how big the percentage of forested areas in the scene are. We can see here that around 18% are forest and about 66% are not forest. The remaining areas are not so clear to define, as waterbodies and cropland are both in the remaining categories.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#| code-fold: true</span>
+<span class="n">counts</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">):</span>
+    <span class="n">num_2_class</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;Naive Bayes&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s1">&#39;Random Forest&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="s1">&#39;Both&#39;</span><span class="p">}</span>
+    <span class="n">counts</span><span class="p">[</span><span class="n">num_2_class</span><span class="p">[</span><span class="n">num</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">double_clf</span> <span class="o">==</span> <span class="n">num</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+
+<span class="n">class_counts_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">counts</span><span class="o">.</span><span class="n">items</span><span class="p">()),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Class&#39;</span><span class="p">,</span> <span class="s1">&#39;Count&#39;</span><span class="p">])</span>
+<span class="n">class_counts_df</span><span class="p">[</span><span class="s1">&#39;Percentage&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">class_counts_df</span><span class="p">[</span><span class="s1">&#39;Count&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">class_counts_df</span><span class="p">[</span><span class="s1">&#39;Count&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span><span class="o">*</span><span class="mi">100</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">class_counts_df</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Class&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Percentage&#39;</span><span class="p">,</span> <span class="n">rot</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;darkgreen&#39;</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Classified Areas per Classificator (%)&#39;</span><span class="p">)</span>
+
+<span class="c1"># Annotate the bars with the percentage values</span>
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">ax</span><span class="o">.</span><span class="n">patches</span><span class="p">:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">%&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">get_height</span><span class="p">()),</span> 
+                <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="n">textcoords</span><span class="o">=</span><span class="s1">&#39;offset points&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/e886dbd7a5e2c76e8fd906658686751a3ca3653d5cc36d61245b3c44414809b4.png" src="../_images/e886dbd7a5e2c76e8fd906658686751a3ca3653d5cc36d61245b3c44414809b4.png" />
+</div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -516,6 +1590,39 @@ display_name: “02_floodmapping”</p>
 
               
               
+                
+                  <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Data Acquisition</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#searching-catalog">Searching Catalog</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-the-data">Loading the Data</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-visualization">Data Visualization</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rgb-image">RGB Image</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ndvi-image">NDVI Image</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#classification">Classification</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regions-of-interest">Regions of Interest</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preparation">Data Preparation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classifiying-with-naive-bayes">Classifiying with Naive Bayes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classifiying-with-random-forest">Classifiying with Random Forest</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-of-the-classificators">Comparison of the Classificators</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
                 
               
 
@@ -717,7 +1824,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -752,7 +1861,7 @@ By the <a href="https://projectpythia.org/">Project Pythia</a> Community
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on 19 July 2024.
+  Last updated on 24 July 2024.
   <br/>
 </p>
   </div>
@@ -806,7 +1915,7 @@ By the <a href="https://projectpythia.org/">Project Pythia</a> Community
         
           By the <a href="https://projectpythia.org/">Project Pythia</a> Community.
         
-          Last updated on 19 July 2024.
+          Last updated on 24 July 2024.
         </p>
       </div>
     </div>
