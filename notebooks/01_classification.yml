@@ -3,19 +3,23 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=3.10
-  - pip
-  - mamba
-  - jupyter
-  - xarray
-  - stackstac
-  - odc-stac
-  - dask
-  - rasterio
   - cmcrameri
-  - numpy
+  - dask
+  - geopandas
+  - ipykernel
+  - jupyter
+  - mamba
   - matplotlib
-  - seaborn
+  - nbformat
+  - numpy
+  - odc-stac
+  - openssl
+  - python==3.10
+  - rasterio
+  - rioxarray
   - scikit-learn
+  - seaborn
+  - stackstac
+  - xarray
   - pip:
       - pystac-client
