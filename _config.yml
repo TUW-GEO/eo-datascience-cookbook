@@ -41,10 +41,7 @@ sphinx:
       use_repository_button: true
       use_edit_page_button: true
       use_fullscreen_button: true
-      analytics:
-        google_analytics_id: G-T52X8HNYE8
-      github_url: https://github.com/ProjectPythia
-      twitter_url: https://twitter.com/project_pythia
+      github_url: https://github.com/TUW-GEO
       icon_links:
         - name: YouTube
           url: https://www.youtube.com/channel/UCoZPBqJal5uKpO8ZiwzavCw
