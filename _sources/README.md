@@ -1,47 +1,43 @@
-<img src="thumbnail.png" alt="thumbnail" width="300"/>
+<img src="tuw-geo-logo.png" alt="tuw-geo-logo" width="300"/>
 
-# (Replace_with_your_title) Cookbook
+# Earth Observation Datascience Cookbook
 
 [![nightly-build](https://github.com/ProjectPythia/cookbook-template/actions/workflows/nightly-build.yaml/badge.svg)](https://github.com/ProjectPythia/cookbook-template/actions/workflows/nightly-build.yaml)
 [![Binder](https://binder.projectpythia.org/badge_logo.svg)](https://binder.projectpythia.org/v2/gh/ProjectPythia/cookbook-template/main?labpath=notebooks)
 [![DOI](https://zenodo.org/badge/475509405.svg)](https://zenodo.org/badge/latestdoi/475509405)
 
-This Project Pythia Cookbook covers ... (replace `...` with the main subject of your cookbook ... e.g., _working with radar data in Python_)
+This Project Pythia Cookbook covers a range of earth observation example employing the Pangeo philosophy.
 
 ## Motivation
 
-(Add a few sentences stating why this cookbook will be useful. What skills will you, "the chef", gain once you have reached the end of the cookbook?)
+The motivation behind this book is to provide some examples of Pangeo-based workflows applied to realistic examples in earth observation.
 
 ## Authors
 
-[First Author](@first-author), [Second Author](@second-author), etc. _Acknowledge primary content authors here_
+[Martin Schobben](@martinschobben), [Nikolas Pikall](@npikall)
 
 ### Contributors
 
-<a href="https://github.com/ProjectPythia/cookbook-template/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=ProjectPythia/cookbook-template" />
+<a href="https://github.com/TUW-GEO/eo-datascience-cookbook/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=TUW-GEO/eo-datascience-cookbook" />
 </a>
 
 ## Structure
 
-(State one or more sections that will comprise the notebook. E.g., _This cookbook is broken up into two main sections - "Foundations" and "Example Workflows."_ Then, describe each section below.)
+This book comprises a set of real life examples.
 
-### Section 1 ( Replace with the title of this section, e.g. "Foundations" )
+### Classification
 
-(Add content for this section, e.g., "The foundational content includes ... ")
-
-### Section 2 ( Replace with the title of this section, e.g. "Example workflows" )
-
-(Add content for this section, e.g., "Example workflows include ... ")
+This section offers an overview of ...
 
 ## Running the Notebooks
 
-You can either run the notebook using [Binder](https://binder.projectpythia.org/) or on your local machine.
+You can either run the notebook using [Binder](https://binder.eo-datascience-cookbook.org/) or on your local machine.
 
 ### Running on Binder
 
 The simplest way to interact with a Jupyter Notebook is through
-[Binder](https://binder.projectpythia.org/), which enables the execution of a
+[Binder](https://binder.eo-datascience-cookbook.org/), which enables the execution of a
 [Jupyter Book](https://jupyterbook.org) in the cloud. The details of how this works are not
 important for now. All you need to know is how to launch a Pythia
 Cookbooks chapter via Binder. Simply navigate your mouse to
@@ -61,20 +57,20 @@ If you are interested in running this material locally on your computer, you wil
 
 (Replace "cookbook-example" with the title of your cookbooks)
 
-1. Clone the `https://github.com/ProjectPythia/cookbook-example` repository:
+1. Clone the `https://github.com/TUW-GEO/eo-datascience-cookbook` repository:
 
    ```bash
-    git clone https://github.com/ProjectPythia/cookbook-example.git
+    git clone https://github.com/TUW-GEO/eo-datascience-cookbook
    ```
 
-1. Move into the `cookbook-example` directory
+1. Move into the `eo-datascience-cookbook` directory
    ```bash
-   cd cookbook-example
+   cd eo-datascience-cookbook
    ```
 1. Create and activate your conda environment from the `environment.yml` file
    ```bash
    conda env create -f environment.yml
-   conda activate cookbook-example
+   conda activate eo-datascience-cookbook
    ```
 1. Move into the `notebooks` directory and start up Jupyterlab
    ```bash
