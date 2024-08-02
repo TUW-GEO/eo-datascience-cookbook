@@ -11,7 +11,7 @@ authors:
     given-names: Nikolas
     website: https://github.com/npikall
     affiliation: Technische Universität Wien, Vienna, Austria
-  - name: "Cookbook Template contributors" # use the 'name' field to acknowledge organizations
-    website: "https://github.com/ProjectPythia/cookbook-template/graphs/contributors"
-title: "Cookbook Template"
-abstract: "A sample cookbook description."
+  - name: "Earth Observation Datascience contributors" # use the 'name' field to acknowledge organizations
+    website: "https://github.com/TUW-GEO/eo-datascience-cookbook/graphs/contributors"
+title: "Earth Observation Datascience"
+abstract: "Earth Observation Datascience provides ..."
