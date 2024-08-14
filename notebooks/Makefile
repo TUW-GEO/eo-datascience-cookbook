@@ -38,7 +38,6 @@ post-render:
 	for i in $(QMD); do quarto convert $$i; done
 	- mv chapters/*.ipynb notebooks/ >/dev/null 2>&1
 	- for f in chapters/*.quarto_ipynb ; do mv -- "$f" "${f%.quarto_ipynb}.ipynb"  >/dev/null 2>&1; done
-	python src/clean-nb.py
 	cp Makefile notebooks/
 
 data:
