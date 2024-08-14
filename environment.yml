@@ -2,6 +2,9 @@ name: cookbook-dev
 channels:
   - conda-forge
 dependencies:
+  - pip
   - jupyter-book
   - jupyterlab
   - sphinx-pythia-theme
+  - pip:
+    - sphinx-rtd-theme

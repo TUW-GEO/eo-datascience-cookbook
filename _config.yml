@@ -75,3 +75,6 @@ sphinx:
         - footer-logos
         - footer-info
         - footer-extra
+
+bibtex_bibfiles:
+  - notebooks/references.bib
