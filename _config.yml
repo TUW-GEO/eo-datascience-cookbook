@@ -6,6 +6,9 @@ author: the <a href="https://projectpythia.org/">Project Pythia</a> Community
 logo: notebooks/images/logos/pythia_logo-white-rtext.svg
 copyright: "2024"
 
+bibtex_bibfiles:
+  - notebooks/references.bib
+
 execute:
   # To execute notebooks via a Binder instead, replace 'cache' with 'binder'
   execute_notebooks: cache
@@ -27,6 +30,7 @@ parse:
 
 sphinx:
   config:
+    bibtex_reference_style: author_year
     linkcheck_ignore: ["https://doi.org/*", "https://zenodo.org/badge/*"] # don't run link checker on DOI links since they are immutable
     nb_execution_raise_on_error: true # raise exception in build if there are notebook errors (this flag is ignored if building on binder)
     html_favicon: notebooks/images/icons/favicon.ico
@@ -76,5 +80,3 @@ sphinx:
         - footer-info
         - footer-extra
 
-bibtex_bibfiles:
-  - notebooks/references.bib
