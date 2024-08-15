@@ -13,7 +13,7 @@ jobs:
     uses: ProjectPythia/cookbook-actions/.github/workflows/build-book.yaml@main
     with:
       build_command: make kernel && make data && jupyter-book build .
-      environment_name: cookbook-dev
+      environment_name: eo-datascience-cookbook
 
   deploy:
     needs: build
