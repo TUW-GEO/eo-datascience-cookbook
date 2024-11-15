@@ -14,7 +14,7 @@ The motivation behind this book is to provide some examples of Pangeo-based work
 
 ## Authors
 
-[Martin Schobben](@martinschobben), [Nikolas Pikall](@npikall)
+[Wolfgang Wagner](@wagner-wolfgang) [Martin Schobben](@martinschobben), [Nikolas Pikall](@npikall)
 
 ### Contributors
 
