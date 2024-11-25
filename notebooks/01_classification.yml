@@ -1,25 +1,23 @@
 name: 01_classification
 channels:
   - conda-forge
-  - defaults
 dependencies:
+  - python=3.12
+  - pip
+  - mamba
+  - jupyter
   - cmcrameri
   - dask
   - geopandas
-  - ipykernel
-  - jupyter
-  - mamba
   - matplotlib
   - nbformat
   - numpy
   - odc-stac
   - openssl
-  - python==3.10
   - rasterio
   - rioxarray
   - scikit-learn
   - seaborn
   - stackstac
   - xarray
-  - pip:
-      - pystac-client
+  - pystac-client
