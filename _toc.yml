@@ -5,11 +5,11 @@ parts:
   - file: notebooks/how-to-cite
 - caption: Classification
   chapters:
-  - file: chapters/01_classification
+  - file: notebooks/01_classification
 - caption: Floodmapping
   chapters:
-  - file: chapters/02_floodmapping
+  - file: notebooks/02_floodmapping
 - caption: References
   chapters:
-  - file: chapters/references
+  - file: notebooks/references
 root: README
