@@ -1,6 +1,14 @@
-thumbnail: thumbnail.png
+thumbnail: notebooks/images/logos/tuw-geo_eodc_logo_horizontal.png
 tags:
   domains:
-    - sampledomain
+    - remote-sensing
+    - microwave-remote-sensing
+    - earth-observation
+    - sentinel-1
+    - stac
   packages:
-    - samplepackage
+    - xarray
+    - holoviews
+    - pystac-client
+    - odc-stac
+    - rioxarray
