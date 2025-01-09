@@ -1,9 +1,8 @@
-name: 01_classification
+name: classification
 channels:
   - conda-forge
 dependencies:
   - python=3.12
-  - pip
   - mamba
   - jupyter
   - cmcrameri

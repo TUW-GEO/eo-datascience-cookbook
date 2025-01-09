@@ -3,12 +3,25 @@ parts:
 - caption: Preamble
   chapters:
   - file: notebooks/how-to-cite
-- caption: Classification
+- caption: Courses
   chapters:
-  - file: notebooks/01_classification
-- caption: Floodmapping
+  - file: notebooks/courses/microwave-remote-sensing
+    sections:
+    - file: notebooks/courses/microwave-remote-sensing/01_in_class_exercise
+    - file: notebooks/courses/microwave-remote-sensing/02_in_class_exercise
+    - file: notebooks/courses/microwave-remote-sensing/03_in_class_exercise
+    - file: notebooks/courses/microwave-remote-sensing/04_in_class_exercise
+    - file: notebooks/courses/microwave-remote-sensing/05_in_class_exercise
+    - file: notebooks/courses/microwave-remote-sensing/06_in_class_exercise
+    - file: notebooks/courses/microwave-remote-sensing/07_in_class_exercise
+    - file: notebooks/courses/microwave-remote-sensing/08_in_class_exercise
+    - file: notebooks/courses/microwave-remote-sensing/09_in_class_exercise
+- caption: Templates
   chapters:
-  - file: notebooks/02_floodmapping
+  - file: notebooks/templates/classification
+- caption: Tutorials
+  chapters:
+  - file: notebooks/tutorials/floodmapping
 - caption: References
   chapters:
   - file: notebooks/references

@@ -1,0 +1,42 @@
+name: microwave-remote-sensing
+channels:
+  - conda-forge
+dependencies:
+  - aiohttp
+  - bokeh
+  - cmcrameri
+  - dask
+  - datashader
+  - eomaps
+  - folium
+  - graphviz
+  - holoviews
+  - huggingface_hub
+  - hvplot
+  - intake
+  - intake-xarray
+  - ipywidgets
+  - ipympl
+  - jupyter
+  - jupyter_bokeh
+  - mamba
+  - matplotlib
+  - nodejs
+  - netcdf4
+  - numpy
+  - odc-stac
+  - pip
+  - pyproj
+  - pystac-client
+  - python=3.11
+  - requests
+  - rioxarray
+  - scikit-image
+  - scipy
+  - seaborn
+  - snaphu
+  - stackstac
+  - xarray
+  - zarr
+  - pip:
+    - graphviz
