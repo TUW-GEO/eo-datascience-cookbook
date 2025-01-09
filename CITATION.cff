@@ -2,16 +2,28 @@ cff-version: 1.2.0
 message: "If you use this cookbook, please cite it as below."
 authors:
   # add additional entries for each author -- see https://github.com/citation-file-format/citation-file-format/blob/main/schema-guide.md
+  - family-names: Wagner
+    given-names: Wolfgang
+    orcid: https://orcid.org/0000-0001-7704-6857
+    website: https://www.tuwien.at/mg/dekanat/mitarbeiter-innen
+    affiliation: Technische Universität Wien, Vienna, Austria, EODC Earth Observation Data Centre for Water Resources Monitoring, Austria
   - family-names: Schobben
     given-names: Martin
-    orcid: https://orcid.org/0000-0001-8560-0037 # optional
-    website: https://github.com/martinschobben # optional
-    affiliation: Technische Universität Wien, Vienna, Austria # optional
+    orcid: https://orcid.org/0000-0001-8560-0037
+    website: https://github.com/martinschobben
+    affiliation: Technische Universität Wien, Vienna, Austria 
   - family-names: Pikall
     given-names: Nikolas
     website: https://github.com/npikall
     affiliation: Technische Universität Wien, Vienna, Austria
   - name: "Earth Observation Datascience contributors" # use the 'name' field to acknowledge organizations
     website: "https://github.com/TUW-GEO/eo-datascience-cookbook/graphs/contributors"
-title: "Earth Observation Datascience"
-abstract: "Earth Observation Datascience provides ..."
+title: "Earth Observation Datascience Cookbook"
+abstract: "Earth Observation Datascience Cookbook provides training material \
+centered around Earth Observation data while honoring the Pangeo Philosophy. \
+The examples used in the notebooks represent some of the main research lines \
+of the Remote Sensing Unit at the Department of Geodesy and Geoinformation at \
+the TU Wien (Austria). In addition, the content familiarizes the reader with \
+the data available at the EODC (Earth Observation Data Centre For Water \
+Resources Monitoring) as well as the computational resources to process
+large amounts of data."
