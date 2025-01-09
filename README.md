@@ -1,4 +1,4 @@
-<img src="assets/images/tuw-geo_eodc_logo_horizontal.png" alt="tuw-geo-logo" width="500"/>
+<img src="notebooks/images/logos/tuw-geo_eodc_logo_horizontal.png" alt="tuw-geo-logo" width="500"/>
 
 # Earth Observation Datascience Cookbook
 
@@ -14,7 +14,7 @@ The motivation behind this book is to provide some examples of Pangeo-based work
 
 ## Authors
 
-[Wolfgang Wagner](@wagner-wolfgang) [Martin Schobben](@martinschobben), [Nikolas Pikall](@npikall)
+[Wolfgang Wagner](@wagner-wolfgang), [Martin Schobben](@martinschobben), [Nikolas Pikall](@npikall)
 
 ### Contributors
 
@@ -34,7 +34,7 @@ This section offers an overview of notebooks, which are used in **courses** from
 
 This section provides a collection of general **examples** of earth observation related tasks and workflows, which are not directly related to a specific course or product.
 
-### Lessons
+### Templates
 
 In this section you will find a collection of lessons, which explain certain **products** or methods that have been developed at the Department of Geodesy and Geoinformation at TU Wien.
 
