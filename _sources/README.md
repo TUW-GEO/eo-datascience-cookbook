@@ -2,15 +2,15 @@
 
 # Earth Observation Datascience Cookbook
 
-[![nightly-build](https://github.com/ProjectPythia/cookbook-template/actions/workflows/nightly-build.yaml/badge.svg)](https://github.com/ProjectPythia/cookbook-template/actions/workflows/nightly-build.yaml)
-[![Binder](https://binder.projectpythia.org/badge_logo.svg)](https://binder.projectpythia.org/v2/gh/ProjectPythia/cookbook-template/main?labpath=notebooks)
-[![DOI](https://zenodo.org/badge/475509405.svg)](https://zenodo.org/badge/latestdoi/475509405)
+[![nightly-build](https://github.com/TUW-GEO/eo-datascience-cookbook/actions/workflows/nightly-build.yaml/badge.svg)](https://github.com/TUW-GEO/eo-datascience-cookbook/actions/workflows/nightly-build.yaml)
+[![Binder](https://binder.projectpythia.org/badge_logo.svg)](https://binder.projectpythia.org/v2/gh/TUW-GEO/eo-datascience-cookbook/main?labpath=notebooks)
+[![DOI](https://zenodo.org/badge/830421828.svg)](https://zenodo.org/badge/latestdoi/830421828)
 
-This Project Pythia Cookbook covers a range of earth observation example employing the Pangeo philosophy.
+This Project Pythia Cookbook covers a range of Earth observation examples employing the Pangeo philosophy. The examples represent the main research lines and BSc/MSc courses at the Department of Geodesy and Geoinformation at the TU Wien (Austria). The department has strong ties with the EODC (Earth Observation Data Centre For Water Resources Monitoring), which hosts e.g., analysis-ready Sentinel-1 (imaging radar mission) data, and provides computational resources to process large such large data volumes.
 
 ## Motivation
 
-The motivation behind this book is to provide some examples of Pangeo-based workflows applied to realistic examples in earth observation.
+The motivation behind this book is to provide examples of Pangeo-based workflows applied to realistic examples in Earth observation data science. Creating an effective learning environment for Earth observation students is a challenging task due to the rapidly growing volume of remotely sensed, climate, and other Earth observation data, along with the evolving demands from the tech industry. Today’s Earth observation students are increasingly becoming a blend of traditional Earth system scientists and "big data scientists", with expertise spanning computer architectures, programming paradigms, statistics, and machine learning for predictive modeling. As a result, it is essential to equip educators with the proper tools for instruction, including training materials, access to data, and the necessary skills to support scalable and reproducible research.
 
 ## Authors
 
@@ -62,8 +62,6 @@ Jupyter](https://foundations.projectpythia.org/foundations/getting-started-jupyt
 ### Running on Your Own Machine
 
 If you are interested in running this material locally on your computer, you will need to follow this workflow:
-
-(Replace "cookbook-example" with the title of your cookbooks)
 
 1. Clone the `https://github.com/TUW-GEO/eo-datascience-cookbook` repository:
 
