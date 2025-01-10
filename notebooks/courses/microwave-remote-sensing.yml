@@ -7,7 +7,6 @@ dependencies:
   - cmcrameri
   - dask
   - datashader
-  - eomaps
   - folium
   - graphviz
   - holoviews
@@ -15,17 +14,13 @@ dependencies:
   - hvplot
   - intake
   - intake-xarray
-  - ipywidgets
-  - ipympl
   - jupyter
   - jupyter_bokeh
   - mamba
   - matplotlib
   - nodejs
-  - netcdf4
   - numpy
   - odc-stac
-  - pip
   - pyproj
   - pystac-client
   - python=3.11
@@ -35,8 +30,5 @@ dependencies:
   - scipy
   - seaborn
   - snaphu
-  - stackstac
   - xarray
-  - zarr
-  - pip:
-    - graphviz
+  - zarr=2.18.4
