@@ -6,7 +6,7 @@
 [![Binder](https://binder.projectpythia.org/badge_logo.svg)](https://binder.projectpythia.org/v2/gh/TUW-GEO/eo-datascience-cookbook/main?labpath=notebooks)
 [![DOI](https://zenodo.org/badge/830421828.svg)](https://zenodo.org/badge/latestdoi/830421828)
 
-This Project Pythia Cookbook covers a range of Earth observation examples employing the Pangeo philosophy. The examples represent the main research lines and BSc/MSc courses at the Department of Geodesy and Geoinformation at the TU Wien (Austria). The department has strong ties with the EODC (Earth Observation Data Centre For Water Resources Monitoring), which hosts e.g., analysis-ready Sentinel-1 (imaging radar mission), and provides computational resources to process large such large data volumes.
+This Project Pythia Cookbook covers a range of Earth observation examples employing the Pangeo philosophy. The examples represent the main research lines and BSc/MSc courses at the Department of Geodesy and Geoinformation at the TU Wien (Austria). The department has strong ties with the EODC (Earth Observation Data Centre For Water Resources Monitoring), which hosts e.g., analysis-ready Sentinel-1 (imaging radar mission) data, and provides computational resources to process large such large data volumes.
 
 ## Motivation
 
