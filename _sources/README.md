@@ -1,4 +1,4 @@
-<img src="tuw-geo-logo.png" alt="tuw-geo-logo" width="300"/>
+<img src="notebooks/images/logos/tuw-geo_eodc_logo_horizontal.png" alt="tuw-geo-logo" width="500"/>
 
 # Earth Observation Datascience Cookbook
 
@@ -14,7 +14,7 @@ The motivation behind this book is to provide some examples of Pangeo-based work
 
 ## Authors
 
-[Wolfgang Wagner](@wagner-wolfgang) [Martin Schobben](@martinschobben), [Nikolas Pikall](@npikall)
+[Wolfgang Wagner](@wagner-wolfgang), [Martin Schobben](@martinschobben), [Nikolas Pikall](@npikall)
 
 ### Contributors
 
@@ -24,11 +24,19 @@ The motivation behind this book is to provide some examples of Pangeo-based work
 
 ## Structure
 
-This book comprises a set of real life examples.
+This book comprises examples of datascience concerning Earth Observation (EO) data, including course material on remote sensing and data products produced by the TU Wien. It also serves to showcase the data and services offered by the EODC (Earth Observation Data Centre For Water Resources Monitoring Gmbh), including a [STAC](https://docs.eodc.eu/services/stac.html) catalogue and a [Dask Gateway](https://docs.eodc.eu/services/dask.html) for distributed data processing.
 
-### Classification
+### Courses
 
-This section offers an overview of ...
+This section offers an overview of notebooks, which are used in **courses** from the Department of Geodesy and Geoinformation at TU Wien.
+
+### Templates
+
+This section provides a collection of general **examples** of earth observation related tasks and workflows, which are not directly related to a specific course or product.
+
+### Tutorials
+
+In this section you will find a collection of lessons, which explain certain **products** or methods that have been developed at the Department of Geodesy and Geoinformation at TU Wien.
 
 ## Running the Notebooks
 
