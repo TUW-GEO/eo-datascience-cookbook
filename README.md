@@ -2,9 +2,9 @@
 
 # Earth Observation Datascience Cookbook
 
-[![nightly-build](https://github.com/ProjectPythia/cookbook-template/actions/workflows/nightly-build.yaml/badge.svg)](https://github.com/ProjectPythia/cookbook-template/actions/workflows/nightly-build.yaml)
-[![Binder](https://binder.projectpythia.org/badge_logo.svg)](https://binder.projectpythia.org/v2/gh/ProjectPythia/cookbook-template/main?labpath=notebooks)
-[![DOI](https://zenodo.org/badge/475509405.svg)](https://zenodo.org/badge/latestdoi/475509405)
+[![nightly-build](https://github.com/TUW-GEO/eo-datascience-cookbook/actions/workflows/nightly-build.yaml/badge.svg)](https://github.com/TUW-GEO/eo-datascience-cookbook/actions/workflows/nightly-build.yaml)
+[![Binder](https://binder.projectpythia.org/badge_logo.svg)](https://binder.projectpythia.org/v2/gh/TUW-GEO/eo-datascience-cookbook/main?labpath=notebooks)
+[![DOI](https://zenodo.org/badge/830421828.svg)](https://zenodo.org/badge/latestdoi/830421828)
 
 This Project Pythia Cookbook covers a range of earth observation example employing the Pangeo philosophy.
 
