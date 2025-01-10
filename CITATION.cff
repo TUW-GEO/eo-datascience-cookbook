@@ -11,10 +11,22 @@ authors:
     given-names: Martin
     orcid: https://orcid.org/0000-0001-8560-0037
     website: https://github.com/martinschobben
-    affiliation: Technische Universität Wien, Vienna, Austria 
+    affiliation: Technische Universität Wien, Vienna, Austria
   - family-names: Pikall
     given-names: Nikolas
     website: https://github.com/npikall
+    affiliation: Technische Universität Wien, Vienna, Austria
+  - family-names: Wagner
+    given-names: Joseph
+    affiliation: Technische Universität Wien, Vienna, Austria
+  - family-names: Festa
+    given-names: Davide
+    affiliation: Technische Universität Wien, Vienna, Austria
+  - family-names: Reuß
+    given-names: Felix David
+    affiliation: Technische Universität Wien, Vienna, Austria
+  - family-names: Jovic
+    given-names: Luka
     affiliation: Technische Universität Wien, Vienna, Austria
   - name: "Earth Observation Datascience contributors" # use the 'name' field to acknowledge organizations
     website: "https://github.com/TUW-GEO/eo-datascience-cookbook/graphs/contributors"
