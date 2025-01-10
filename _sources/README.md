@@ -14,7 +14,7 @@ The motivation behind this book is to provide some examples of Pangeo-based work
 
 ## Authors
 
-[Wolfgang Wagner](@wagner-wolfgang), [Martin Schobben](@martinschobben), [Nikolas Pikall](@npikall)
+[Wolfgang Wagner](@wagner-wolfgang), [Martin Schobben](@martinschobben), [Nikolas Pikall](@npikall), [Joseph Wagner](@wagnerjoseph), [Davide Festa](@maybedave), [Felix David Reuß](@FelixReuss), [Luka Jovic](@lukojovic)
 
 ### Contributors
 
@@ -75,10 +75,9 @@ If you are interested in running this material locally on your computer, you wil
    ```bash
    cd eo-datascience-cookbook
    ```
-1. Create and activate your conda environment from the `environment.yml` file
+1. Create Jupyter kernels
    ```bash
-   conda env create -f environment.yml
-   conda activate eo-datascience-cookbook
+   make kernel
    ```
 1. Move into the `notebooks` directory and start up Jupyterlab
    ```bash
