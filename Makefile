@@ -9,7 +9,7 @@ CONDA_ENV != conda info --base
 CONDA_ACTIVATE := source $(CONDA_ENV)/etc/profile.d/conda.sh ; \
 	conda activate ; conda activate
 CONDA_ENV_DIR := $(foreach i,$(REQ),$(CONDA_ENV)/envs/$(i))
-KERNEL_DIR != $(CONDA_ACTIVATE) eo-datascience; jupyter --data-dir
+KERNEL_DIR != $(CONDA_ACTIVATE) eo-datascience-cookbook-dev; jupyter --data-dir
 KERNEL_DIR := $(foreach i,$(REQ),$(KERNEL_DIR)/kernels/$(i))
 
 help:
@@ -24,7 +24,7 @@ help:
 		temporary files"
 	@echo "  make help         - Display this help message"
 
-$(CONDA_ENV)/envs/eo-datascience:
+$(CONDA_ENV)/envs/eo-datascience-cookbook-dev:
 	- conda update -n base -c conda-forge conda -y
 	conda env create --file environment.yml
 
@@ -40,7 +40,7 @@ $(KERNEL_DIR):
 		python -m ipykernel install --user --name $(f) --display-name $(f); \
 		conda deactivate; )
 
-kernel: $(CONDA_ENV)/envs/eo-datascience $(CONDA_ENV_DIR) $(KERNEL_DIR)
+kernel: $(CONDA_ENV)/envs/eo-datascience-cookbook-dev $(CONDA_ENV_DIR) $(KERNEL_DIR)
 	@echo -e "jupyter kernels are ready."
 
 clean:
@@ -49,7 +49,7 @@ clean:
 		**/**/.jupyter_cache **/**/**/.jupyter_cache
 
 teardown:
-	conda remove -n eo-datascience --all -y
+	conda remove -n eo-datascience-cookbook-dev --all -y
 	$(foreach f, $(REQ), \
 		$(CONDA_ACTIVATE) $(f); \
 		jupyter kernelspec uninstall -y $(f); \
