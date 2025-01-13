@@ -4,8 +4,6 @@ SHELL = /bin/bash
 
 YML = $(wildcard notebooks/**/*.yml)
 REQ := $(basename $(notdir $(YML)))
-NB != find chapters -name "*.quarto_ipynb" -o  -name "*.ipynb" -not -path \
-	"*/.jupyter_cache/*"
 
 CONDA_ENV != conda info --base
 CONDA_ACTIVATE := source $(CONDA_ENV)/etc/profile.d/conda.sh ; \
@@ -20,8 +18,6 @@ help:
 	@echo "Usage:"
 	@echo "  make environment  - Create Conda environments"
 	@echo "  make kernel       - Create Conda environments and Jupyter kernels"
-	@echo "  make post-render  - Post-render Quarto book"
-	@echo "  make preview      - Preview Jupyter Book"
 	@echo "  "
 	@echo "  make teardown     - Remove Conda environments and Jupyter kernels"
 	@echo "  make clean        - Removes ipynb_checkpoints and quarto \
@@ -47,30 +43,10 @@ $(KERNEL_DIR):
 kernel: $(CONDA_ENV)/envs/eo-datascience $(CONDA_ENV_DIR) $(KERNEL_DIR)
 	@echo -e "jupyter kernels are ready."
 
-post-render:
-	$(foreach f, $(NB), \
-		mv $(f) "$(subst chapters,notebooks,$(subst .quarto_ipynb,.ipynb,$(f)))"; )
-	cp ./Makefile ./notebooks/
-	cp -r ./chapters/images ./notebooks
-
-preview: $(CONDA_ENV)/envs/eo-datascience $(CONDA_ENV_DIR) $(KERNEL_DIR)
-	$(CONDA_ACTIVATE) eo-datascience
-	- mkdir -p _preview/notebooks
-	python -m pip install .
-	cp ./chapters/references.bib ./_preview/notebooks/
-	cp -r ./chapters/images ./_preview/notebooks
-	wget https://raw.githubusercontent.com/TUW-GEO/eo-datascience-cookbook/refs/heads/main/README.md -nc -P ./_preview
-	wget https://raw.githubusercontent.com/TUW-GEO/eo-datascience-cookbook/refs/heads/main/_config.yml -nc -P ./_preview
-	wget https://raw.githubusercontent.com/TUW-GEO/eo-datascience-cookbook/refs/heads/main/notebooks/how-to-cite.md -nc -P ./_preview/notebooks
-	render_sfinx_toc ./_preview
-	clean_nb ./notebooks ./_preview/notebooks
-	jupyter-book build ./_preview
-	jupyter-book build ./_preview
-
 clean:
-	rm --force --recursive .ipynb_checkpoints/ **/.ipynb_checkpoints/ _book/ \
-		_freeze/ .quarto/ _preview/ ./pytest_cache ./**/**/**/.jupyter_cache \
-		./**/**/.jupyter_cache
+	rm --force --recursive **/.ipynb_checkpoints **/**/.ipynb_checkpoints \
+		**/**/**/.ipynb_checkpoints ./pytest_cache **/.jupyter_cache \
+		**/**/.jupyter_cache **/**/**/.jupyter_cache
 
 teardown:
 	conda remove -n eo-datascience --all -y
