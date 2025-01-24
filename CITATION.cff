@@ -28,10 +28,10 @@ authors:
   - family-names: Jovic
     given-names: Luka
     affiliation: Technische Universität Wien, Vienna, Austria
-  - name: "Earth Observation Datascience contributors" # use the 'name' field to acknowledge organizations
+  - name: "Earth Observation Data Science contributors" # use the 'name' field to acknowledge organizations
     website: "https://github.com/TUW-GEO/eo-datascience-cookbook/graphs/contributors"
-title: "Earth Observation Datascience Cookbook"
-abstract: "Earth Observation Datascience Cookbook provides training material \
+title: "Earth Observation Data Science Cookbook"
+abstract: "Earth Observation Data Science Cookbook provides training material \
 centered around Earth Observation data while honoring the Pangeo Philosophy. \
 The examples used in the notebooks represent some of the main research lines \
 of the Remote Sensing Unit at the Department of Geodesy and Geoinformation at \

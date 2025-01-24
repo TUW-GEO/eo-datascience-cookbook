@@ -1,6 +1,6 @@
 <img src="notebooks/images/logos/tuw-geo_eodc_logo_horizontal.png" alt="tuw-geo-logo" width="500"/>
 
-# Earth Observation Datascience Cookbook
+# Earth Observation Data Science Cookbook
 
 [![nightly-build](https://github.com/TUW-GEO/eo-datascience-cookbook/actions/workflows/nightly-build.yaml/badge.svg)](https://github.com/TUW-GEO/eo-datascience-cookbook/actions/workflows/nightly-build.yaml)
 [![Binder](https://binder.projectpythia.org/badge_logo.svg)](https://binder.projectpythia.org/v2/gh/TUW-GEO/eo-datascience-cookbook/main?labpath=notebooks)
@@ -42,7 +42,7 @@ the necessary skills to support scalable and reproducible research.
 
 ## Structure
 
-This book comprises examples of datascience concerning Earth Observation (EO) data, 
+This book comprises examples of data science concerning Earth Observation (EO) data, 
 including course material on remote sensing and data products produced by the TU 
 Wien. It also serves to showcase the data and services offered by the EODC, including 
 a [STAC](https://docs.eodc.eu/services/stac.html) catalogue and a 
