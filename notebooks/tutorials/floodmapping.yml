@@ -13,7 +13,7 @@ dependencies:
   - hvplot
   - geoviews
   - jupyter_bokeh
-  - dask=2024.12.0
+  - dask
   - pystac-client
   - odc-stac
   - rioxarray
