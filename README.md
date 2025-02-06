@@ -2,8 +2,8 @@
 
 # Earth Observation Data Science Cookbook
 
-[![nightly-build](https://github.com/TUW-GEO/eo-datascience-cookbook/actions/workflows/nightly-build.yaml/badge.svg)](https://github.com/TUW-GEO/eo-datascience-cookbook/actions/workflows/nightly-build.yaml)
-[![Binder](https://binder.projectpythia.org/badge_logo.svg)](https://binder.projectpythia.org/v2/gh/TUW-GEO/eo-datascience-cookbook/main?labpath=notebooks)
+[![nightly-build](https://github.com/ProjectPythia/eo-datascience-cookbook/actions/workflows/nightly-build.yaml/badge.svg)](https://github.com/ProjectPythia/eo-datascience-cookbook/actions/workflows/nightly-build.yaml)
+[![Binder](https://binder.projectpythia.org/badge_logo.svg)](https://binder.projectpythia.org/v2/gh/ProjectPythia/eo-datascience-cookbook/main?labpath=notebooks)
 [![DOI](https://zenodo.org/badge/830421828.svg)](https://zenodo.org/badge/latestdoi/830421828)
 
 This Project Pythia Cookbook covers a range of Earth observation examples employing
@@ -67,13 +67,13 @@ Geoinformation at TU Wien.
 
 ## Running the Notebooks
 
-You can either run the notebook using [Binder](https://binder.eo-datascience-cookbook.org/)
+You can either run the notebook using [Binder](https://binder.projectpythia.org/v2/gh/ProjectPythia/eo-datascience-cookbook/main?labpath=notebooks)
 or on your local machine.
 
 ### Running on Binder
 
 The simplest way to interact with a Jupyter Notebook is through
-[Binder](https://binder.eo-datascience-cookbook.org/), which enables the execution of a
+[Binder](https://binder.projectpythia.org/v2/gh/ProjectPythia/eo-datascience-cookbook/main?labpath=notebooks), which enables the execution of a
 [Jupyter Book](https://jupyterbook.org) in the cloud. The details of how this works are not
 important for now. All you need to know is how to launch a Pythia
 Cookbooks chapter via Binder. Simply navigate your mouse to
