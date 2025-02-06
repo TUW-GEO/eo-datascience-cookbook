@@ -72,7 +72,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
-    <meta name="docbuild:last-update" content="1 February 2025"/>
+    <meta name="docbuild:last-update" content="6 February 2025"/>
   </head>
   
   
@@ -410,15 +410,14 @@ In this notebook we will use the resulting wrapped interferogram from notebook â
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Imports</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.patches</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">patches</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">cmcrameri</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmc</span>  <span class="c1"># noqa: F401</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">snaphu</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">intake</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.patches</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">patches</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">snaphu</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">clear_output</span>
 </pre></div>
 </div>
@@ -597,9 +596,9 @@ The actual unwrapping is essentially an addition of the phase values, such that 
 
 <span class="c1"># Unwrapped Phase</span>
 <span class="p">(</span>
-    <span class="n">subset</span><span class="o">.</span><span class="n">unwrapped</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmap_cyc</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">80</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
-        <span class="s2">&quot;Unwrapped Phase of the Subset&quot;</span>
-    <span class="p">)</span>
+    <span class="n">subset</span><span class="o">.</span><span class="n">unwrapped</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
+        <span class="n">cmap</span><span class="o">=</span><span class="n">cmap_cyc</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">80</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">80</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Unwrapped Phase of the Subset&quot;</span><span class="p">)</span>
 <span class="p">)</span>
 
 <span class="c1"># Subset inside the complete image</span>
@@ -659,15 +658,15 @@ The actual unwrapping is essentially an addition of the phase values, such that 
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="p">(</span>
-    <span class="n">subset</span><span class="o">.</span><span class="n">unwrapped_coh</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmap_cyc</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">80</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;Unwrapped Phase with Coherence Threshold </span><span class="si">{</span><span class="n">threshold1</span><span class="si">}</span><span class="s2">&quot;</span>
-    <span class="p">)</span>
+    <span class="n">subset</span><span class="o">.</span><span class="n">unwrapped_coh</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
+        <span class="n">cmap</span><span class="o">=</span><span class="n">cmap_cyc</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">80</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">80</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unwrapped Phase with Coherence Threshold </span><span class="si">{</span><span class="n">threshold1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="p">)</span>
 
 <span class="p">(</span>
-    <span class="n">subset</span><span class="o">.</span><span class="n">unwrapped</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmap_cyc</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">80</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
-        <span class="s2">&quot;Unwrapped Phase without Coherence Threshold&quot;</span>
-    <span class="p">)</span>
+    <span class="n">subset</span><span class="o">.</span><span class="n">unwrapped</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
+        <span class="n">cmap</span><span class="o">=</span><span class="n">cmap_cyc</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">80</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">80</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Unwrapped Phase without Coherence Threshold&quot;</span><span class="p">)</span>
 <span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -692,15 +691,15 @@ The actual unwrapping is essentially an addition of the phase values, such that 
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="p">(</span>
-    <span class="n">subset</span><span class="o">.</span><span class="n">unwrapped_coh2</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmap_cyc</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">80</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
-        <span class="s2">&quot;Coherence Threshold 0.5&quot;</span>
-    <span class="p">)</span>
+    <span class="n">subset</span><span class="o">.</span><span class="n">unwrapped_coh2</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
+        <span class="n">cmap</span><span class="o">=</span><span class="n">cmap_cyc</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">80</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">80</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Coherence Threshold 0.5&quot;</span><span class="p">)</span>
 <span class="p">)</span>
 
 <span class="p">(</span>
-    <span class="n">subset</span><span class="o">.</span><span class="n">unwrapped_coh</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmap_cyc</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">80</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
-        <span class="s2">&quot;Coherence Threshold 0.3&quot;</span>
-    <span class="p">)</span>
+    <span class="n">subset</span><span class="o">.</span><span class="n">unwrapped_coh</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
+        <span class="n">cmap</span><span class="o">=</span><span class="n">cmap_cyc</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">80</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">80</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Coherence Threshold 0.3&quot;</span><span class="p">)</span>
 <span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -842,9 +841,9 @@ d = - \frac{\lambda}{4 \cdot \pi} \cdot \Delta \phi_d
 <span class="n">ax</span> <span class="o">=</span> <span class="n">axs</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
 
 <span class="p">(</span>
-    <span class="n">subset</span><span class="o">.</span><span class="n">unwrapped_coh</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmap_cyc</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">80</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
-        <span class="s2">&quot;Unwrapped Phase of the subset with Coherence Threshold 0.3&quot;</span>
-    <span class="p">)</span>
+    <span class="n">subset</span><span class="o">.</span><span class="n">unwrapped_coh</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
+        <span class="n">cmap</span><span class="o">=</span><span class="n">cmap_cyc</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">80</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">80</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Unwrapped Phase of the subset with Coherence Threshold 0.3&quot;</span><span class="p">)</span>
 <span class="p">)</span>
 
 <span class="p">(</span>
@@ -1186,7 +1185,7 @@ By the <a href="https://projectpythia.org/">Project Pythia</a> Community
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on 1 February 2025.
+  Last updated on 6 February 2025.
   <br/>
 </p>
   </div>
@@ -1240,7 +1239,7 @@ By the <a href="https://projectpythia.org/">Project Pythia</a> Community
         
           By the <a href="https://projectpythia.org/">Project Pythia</a> Community.
         
-          Last updated on 1 February 2025.
+          Last updated on 6 February 2025.
         </p>
       </div>
     </div>

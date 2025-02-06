@@ -72,7 +72,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
-    <meta name="docbuild:last-update" content="1 February 2025"/>
+    <meta name="docbuild:last-update" content="6 February 2025"/>
   </head>
   
   
@@ -407,26 +407,24 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pystac_client</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">odc.stac</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">rioxarray</span>  <span class="c1"># noqa: F401</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cmcrameri</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmc</span>  <span class="c1"># noqa: F401</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">geopandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gpd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.colors</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">colors</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">odc.stac</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pystac_client</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">rioxarray</span>  <span class="c1"># noqa: F401</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">odc.geo.geobox</span><span class="w"> </span><span class="kn">import</span> <span class="n">GeoBox</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">shapely.geometry</span><span class="w"> </span><span class="kn">import</span> <span class="n">Polygon</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">cmcrameri</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmc</span>  <span class="c1"># noqa: F401</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.colors</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">colors</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">classification_report</span><span class="p">,</span> <span class="n">confusion_matrix</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
 
 <span class="c1"># Scikit Learn</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.naive_bayes</span><span class="w"> </span><span class="kn">import</span> <span class="n">GaussianNB</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">confusion_matrix</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">classification_report</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
 </pre></div>
 </div>
 </div>
@@ -454,15 +452,17 @@
 <span class="n">date_query</span> <span class="o">=</span> <span class="n">start_date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">time_format</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">end_date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">time_format</span><span class="p">)</span>
 
 <span class="c1"># Search for Sentinel-2 data</span>
-<span class="n">items</span> <span class="o">=</span> <span class="n">pystac_client</span><span class="o">.</span><span class="n">Client</span><span class="o">.</span><span class="n">open</span><span class="p">(</span>
-    <span class="s2">&quot;https://earth-search.aws.element84.com/v1&quot;</span>
-<span class="p">)</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
-    <span class="n">bbox</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span>
-    <span class="n">collections</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;sentinel-2-l2a&quot;</span><span class="p">],</span>
-    <span class="n">datetime</span><span class="o">=</span><span class="n">date_query</span><span class="p">,</span>
-    <span class="n">limit</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-<span class="p">)</span><span class="o">.</span><span class="n">item_collection</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">),</span> <span class="s1">&#39;scenes found&#39;</span><span class="p">)</span>
+<span class="n">items</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">pystac_client</span><span class="o">.</span><span class="n">Client</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;https://earth-search.aws.element84.com/v1&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">search</span><span class="p">(</span>
+        <span class="n">bbox</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span>
+        <span class="n">collections</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;sentinel-2-l2a&quot;</span><span class="p">],</span>
+        <span class="n">datetime</span><span class="o">=</span><span class="n">date_query</span><span class="p">,</span>
+        <span class="n">limit</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="o">.</span><span class="n">item_collection</span><span class="p">()</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">),</span> <span class="s2">&quot;scenes found&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -488,7 +488,7 @@ After passing these parameters to the <code class="docutils literal notranslate"
 <span class="n">dc</span> <span class="o">=</span> <span class="n">odc</span><span class="o">.</span><span class="n">stac</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
     <span class="n">items</span><span class="p">,</span>
     <span class="n">bands</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;scl&quot;</span><span class="p">,</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="s2">&quot;nir&quot;</span><span class="p">],</span>
-    <span class="n">chunks</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="mi">600</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="mi">600</span><span class="p">},</span>
+    <span class="n">chunks</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mi">600</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="mi">600</span><span class="p">},</span>
     <span class="n">geobox</span><span class="o">=</span><span class="n">geobox</span><span class="p">,</span>
     <span class="n">resampling</span><span class="o">=</span><span class="s2">&quot;bilinear&quot;</span><span class="p">,</span>
 <span class="p">)</span>
@@ -879,12 +879,12 @@ Data variables:
     red          (time, latitude, longitude) uint16 18MB dask.array&lt;chunksize=(5, 600, 600), meta=np.ndarray&gt;
     green        (time, latitude, longitude) uint16 18MB dask.array&lt;chunksize=(5, 600, 600), meta=np.ndarray&gt;
     blue         (time, latitude, longitude) uint16 18MB dask.array&lt;chunksize=(5, 600, 600), meta=np.ndarray&gt;
-    nir          (time, latitude, longitude) uint16 18MB dask.array&lt;chunksize=(5, 600, 600), meta=np.ndarray&gt;</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.Dataset</div></div><ul class='xr-sections'><li class='xr-section-item'><input id='section-c25afb52-1861-4a29-a247-961de4a2192b' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-c25afb52-1861-4a29-a247-961de4a2192b' class='xr-section-summary'  title='Expand/collapse section'>Dimensions:</label><div class='xr-section-inline-details'><ul class='xr-dim-list'><li><span class='xr-has-index'>latitude</span>: 913</li><li><span class='xr-has-index'>longitude</span>: 967</li><li><span class='xr-has-index'>time</span>: 10</li></ul></div><div class='xr-section-details'></div></li><li class='xr-section-item'><input id='section-ac7c2830-be53-4c22-98fb-308c62f3f6ec' class='xr-section-summary-in' type='checkbox'  checked><label for='section-ac7c2830-be53-4c22-98fb-308c62f3f6ec' class='xr-section-summary' >Coordinates: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>latitude</span></div><div class='xr-var-dims'>(latitude)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>48.41 48.41 48.41 ... 47.86 47.86</div><input id='attrs-4a763d1c-5339-4b03-9df3-d6e3b902bea7' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-4a763d1c-5339-4b03-9df3-d6e3b902bea7' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-521519e7-f740-4936-91d1-30fac4c20799' class='xr-var-data-in' type='checkbox'><label for='data-521519e7-f740-4936-91d1-30fac4c20799' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>units :</span></dt><dd>degrees_north</dd><dt><span>resolution :</span></dt><dd>-0.0006</dd><dt><span>crs :</span></dt><dd>EPSG:4326</dd></dl></div><div class='xr-var-data'><pre>array([48.4071, 48.4065, 48.4059, ..., 47.8611, 47.8605, 47.8599], shape=(913,))</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>longitude</span></div><div class='xr-var-dims'>(longitude)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>16.32 16.32 16.32 ... 16.9 16.9</div><input id='attrs-e6b7c1f3-77b9-4bdf-af6e-eb244c31048f' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-e6b7c1f3-77b9-4bdf-af6e-eb244c31048f' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-338ca4c9-6fdc-46d0-93b3-d5502aa5d868' class='xr-var-data-in' type='checkbox'><label for='data-338ca4c9-6fdc-46d0-93b3-d5502aa5d868' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>units :</span></dt><dd>degrees_east</dd><dt><span>resolution :</span></dt><dd>0.0006</dd><dt><span>crs :</span></dt><dd>EPSG:4326</dd></dl></div><div class='xr-var-data'><pre>array([16.3203, 16.3209, 16.3215, ..., 16.8987, 16.8993, 16.8999], shape=(967,))</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>spatial_ref</span></div><div class='xr-var-dims'>()</div><div class='xr-var-dtype'>int32</div><div class='xr-var-preview xr-preview'>4326</div><input id='attrs-9ea43607-9bea-45ed-9e3f-6c58f4c64776' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-9ea43607-9bea-45ed-9e3f-6c58f4c64776' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-f3cfabc7-d684-4afd-87cc-1bd569116bd5' class='xr-var-data-in' type='checkbox'><label for='data-f3cfabc7-d684-4afd-87cc-1bd569116bd5' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>spatial_ref :</span></dt><dd>GEOGCRS[&quot;WGS 84&quot;,ENSEMBLE[&quot;World Geodetic System 1984 ensemble&quot;,MEMBER[&quot;World Geodetic System 1984 (Transit)&quot;],MEMBER[&quot;World Geodetic System 1984 (G730)&quot;],MEMBER[&quot;World Geodetic System 1984 (G873)&quot;],MEMBER[&quot;World Geodetic System 1984 (G1150)&quot;],MEMBER[&quot;World Geodetic System 1984 (G1674)&quot;],MEMBER[&quot;World Geodetic System 1984 (G1762)&quot;],MEMBER[&quot;World Geodetic System 1984 (G2139)&quot;],MEMBER[&quot;World Geodetic System 1984 (G2296)&quot;],ELLIPSOID[&quot;WGS 84&quot;,6378137,298.257223563,LENGTHUNIT[&quot;metre&quot;,1]],ENSEMBLEACCURACY[2.0]],PRIMEM[&quot;Greenwich&quot;,0,ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],CS[ellipsoidal,2],AXIS[&quot;geodetic latitude (Lat)&quot;,north,ORDER[1],ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],AXIS[&quot;geodetic longitude (Lon)&quot;,east,ORDER[2],ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],USAGE[SCOPE[&quot;Horizontal component of 3D system.&quot;],AREA[&quot;World.&quot;],BBOX[-90,-180,90,180]],ID[&quot;EPSG&quot;,4326]]</dd><dt><span>crs_wkt :</span></dt><dd>GEOGCRS[&quot;WGS 84&quot;,ENSEMBLE[&quot;World Geodetic System 1984 ensemble&quot;,MEMBER[&quot;World Geodetic System 1984 (Transit)&quot;],MEMBER[&quot;World Geodetic System 1984 (G730)&quot;],MEMBER[&quot;World Geodetic System 1984 (G873)&quot;],MEMBER[&quot;World Geodetic System 1984 (G1150)&quot;],MEMBER[&quot;World Geodetic System 1984 (G1674)&quot;],MEMBER[&quot;World Geodetic System 1984 (G1762)&quot;],MEMBER[&quot;World Geodetic System 1984 (G2139)&quot;],MEMBER[&quot;World Geodetic System 1984 (G2296)&quot;],ELLIPSOID[&quot;WGS 84&quot;,6378137,298.257223563,LENGTHUNIT[&quot;metre&quot;,1]],ENSEMBLEACCURACY[2.0]],PRIMEM[&quot;Greenwich&quot;,0,ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],CS[ellipsoidal,2],AXIS[&quot;geodetic latitude (Lat)&quot;,north,ORDER[1],ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],AXIS[&quot;geodetic longitude (Lon)&quot;,east,ORDER[2],ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],USAGE[SCOPE[&quot;Horizontal component of 3D system.&quot;],AREA[&quot;World.&quot;],BBOX[-90,-180,90,180]],ID[&quot;EPSG&quot;,4326]]</dd><dt><span>semi_major_axis :</span></dt><dd>6378137.0</dd><dt><span>semi_minor_axis :</span></dt><dd>6356752.314245179</dd><dt><span>inverse_flattening :</span></dt><dd>298.257223563</dd><dt><span>reference_ellipsoid_name :</span></dt><dd>WGS 84</dd><dt><span>longitude_of_prime_meridian :</span></dt><dd>0.0</dd><dt><span>prime_meridian_name :</span></dt><dd>Greenwich</dd><dt><span>geographic_crs_name :</span></dt><dd>WGS 84</dd><dt><span>horizontal_datum_name :</span></dt><dd>World Geodetic System 1984 ensemble</dd><dt><span>grid_mapping_name :</span></dt><dd>latitude_longitude</dd><dt><span>GeoTransform :</span></dt><dd>16.320000000000000284217094 0.000599999999999999947438 0 48.407399999999995543475961 0 -0.000599999999999999947438</dd></dl></div><div class='xr-var-data'><pre>array(4326, dtype=int32)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>time</span></div><div class='xr-var-dims'>(time)</div><div class='xr-var-dtype'>datetime64[ns]</div><div class='xr-var-preview xr-preview'>2024-05-01T09:57:21.858000 ... 2...</div><input id='attrs-d63e0d9e-8393-42dc-b8d3-49ce97a89456' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-d63e0d9e-8393-42dc-b8d3-49ce97a89456' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-f8256fa4-0e2a-49dd-9666-813ef51c4444' class='xr-var-data-in' type='checkbox'><label for='data-f8256fa4-0e2a-49dd-9666-813ef51c4444' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;2024-05-01T09:57:21.858000000&#x27;, &#x27;2024-05-01T09:57:24.892000000&#x27;,
+    nir          (time, latitude, longitude) uint16 18MB dask.array&lt;chunksize=(5, 600, 600), meta=np.ndarray&gt;</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.Dataset</div></div><ul class='xr-sections'><li class='xr-section-item'><input id='section-a265a3e4-1e6d-40aa-9ce2-f8f10c7d67e7' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-a265a3e4-1e6d-40aa-9ce2-f8f10c7d67e7' class='xr-section-summary'  title='Expand/collapse section'>Dimensions:</label><div class='xr-section-inline-details'><ul class='xr-dim-list'><li><span class='xr-has-index'>latitude</span>: 913</li><li><span class='xr-has-index'>longitude</span>: 967</li><li><span class='xr-has-index'>time</span>: 10</li></ul></div><div class='xr-section-details'></div></li><li class='xr-section-item'><input id='section-a0d03a3b-42a7-4c1e-aa9f-10776814346c' class='xr-section-summary-in' type='checkbox'  checked><label for='section-a0d03a3b-42a7-4c1e-aa9f-10776814346c' class='xr-section-summary' >Coordinates: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>latitude</span></div><div class='xr-var-dims'>(latitude)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>48.41 48.41 48.41 ... 47.86 47.86</div><input id='attrs-bb8d4772-3e9d-40db-a2e4-32db0ef81284' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-bb8d4772-3e9d-40db-a2e4-32db0ef81284' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-e9a127ea-45f1-4a9a-a8b0-ec17d2b3e008' class='xr-var-data-in' type='checkbox'><label for='data-e9a127ea-45f1-4a9a-a8b0-ec17d2b3e008' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>units :</span></dt><dd>degrees_north</dd><dt><span>resolution :</span></dt><dd>-0.0006</dd><dt><span>crs :</span></dt><dd>EPSG:4326</dd></dl></div><div class='xr-var-data'><pre>array([48.4071, 48.4065, 48.4059, ..., 47.8611, 47.8605, 47.8599], shape=(913,))</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>longitude</span></div><div class='xr-var-dims'>(longitude)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>16.32 16.32 16.32 ... 16.9 16.9</div><input id='attrs-27462cb8-272b-4cda-b38a-96f3f1f33dc4' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-27462cb8-272b-4cda-b38a-96f3f1f33dc4' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-cb393bf3-6a6c-4989-aafa-988c528eddfb' class='xr-var-data-in' type='checkbox'><label for='data-cb393bf3-6a6c-4989-aafa-988c528eddfb' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>units :</span></dt><dd>degrees_east</dd><dt><span>resolution :</span></dt><dd>0.0006</dd><dt><span>crs :</span></dt><dd>EPSG:4326</dd></dl></div><div class='xr-var-data'><pre>array([16.3203, 16.3209, 16.3215, ..., 16.8987, 16.8993, 16.8999], shape=(967,))</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>spatial_ref</span></div><div class='xr-var-dims'>()</div><div class='xr-var-dtype'>int32</div><div class='xr-var-preview xr-preview'>4326</div><input id='attrs-71c8d4af-2ae7-462b-865f-9281d891e242' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-71c8d4af-2ae7-462b-865f-9281d891e242' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-1c24469e-1104-4246-8e60-b65ece4705e2' class='xr-var-data-in' type='checkbox'><label for='data-1c24469e-1104-4246-8e60-b65ece4705e2' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>spatial_ref :</span></dt><dd>GEOGCRS[&quot;WGS 84&quot;,ENSEMBLE[&quot;World Geodetic System 1984 ensemble&quot;,MEMBER[&quot;World Geodetic System 1984 (Transit)&quot;],MEMBER[&quot;World Geodetic System 1984 (G730)&quot;],MEMBER[&quot;World Geodetic System 1984 (G873)&quot;],MEMBER[&quot;World Geodetic System 1984 (G1150)&quot;],MEMBER[&quot;World Geodetic System 1984 (G1674)&quot;],MEMBER[&quot;World Geodetic System 1984 (G1762)&quot;],MEMBER[&quot;World Geodetic System 1984 (G2139)&quot;],MEMBER[&quot;World Geodetic System 1984 (G2296)&quot;],ELLIPSOID[&quot;WGS 84&quot;,6378137,298.257223563,LENGTHUNIT[&quot;metre&quot;,1]],ENSEMBLEACCURACY[2.0]],PRIMEM[&quot;Greenwich&quot;,0,ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],CS[ellipsoidal,2],AXIS[&quot;geodetic latitude (Lat)&quot;,north,ORDER[1],ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],AXIS[&quot;geodetic longitude (Lon)&quot;,east,ORDER[2],ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],USAGE[SCOPE[&quot;Horizontal component of 3D system.&quot;],AREA[&quot;World.&quot;],BBOX[-90,-180,90,180]],ID[&quot;EPSG&quot;,4326]]</dd><dt><span>crs_wkt :</span></dt><dd>GEOGCRS[&quot;WGS 84&quot;,ENSEMBLE[&quot;World Geodetic System 1984 ensemble&quot;,MEMBER[&quot;World Geodetic System 1984 (Transit)&quot;],MEMBER[&quot;World Geodetic System 1984 (G730)&quot;],MEMBER[&quot;World Geodetic System 1984 (G873)&quot;],MEMBER[&quot;World Geodetic System 1984 (G1150)&quot;],MEMBER[&quot;World Geodetic System 1984 (G1674)&quot;],MEMBER[&quot;World Geodetic System 1984 (G1762)&quot;],MEMBER[&quot;World Geodetic System 1984 (G2139)&quot;],MEMBER[&quot;World Geodetic System 1984 (G2296)&quot;],ELLIPSOID[&quot;WGS 84&quot;,6378137,298.257223563,LENGTHUNIT[&quot;metre&quot;,1]],ENSEMBLEACCURACY[2.0]],PRIMEM[&quot;Greenwich&quot;,0,ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],CS[ellipsoidal,2],AXIS[&quot;geodetic latitude (Lat)&quot;,north,ORDER[1],ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],AXIS[&quot;geodetic longitude (Lon)&quot;,east,ORDER[2],ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],USAGE[SCOPE[&quot;Horizontal component of 3D system.&quot;],AREA[&quot;World.&quot;],BBOX[-90,-180,90,180]],ID[&quot;EPSG&quot;,4326]]</dd><dt><span>semi_major_axis :</span></dt><dd>6378137.0</dd><dt><span>semi_minor_axis :</span></dt><dd>6356752.314245179</dd><dt><span>inverse_flattening :</span></dt><dd>298.257223563</dd><dt><span>reference_ellipsoid_name :</span></dt><dd>WGS 84</dd><dt><span>longitude_of_prime_meridian :</span></dt><dd>0.0</dd><dt><span>prime_meridian_name :</span></dt><dd>Greenwich</dd><dt><span>geographic_crs_name :</span></dt><dd>WGS 84</dd><dt><span>horizontal_datum_name :</span></dt><dd>World Geodetic System 1984 ensemble</dd><dt><span>grid_mapping_name :</span></dt><dd>latitude_longitude</dd><dt><span>GeoTransform :</span></dt><dd>16.320000000000000284217094 0.000599999999999999947438 0 48.407399999999995543475961 0 -0.000599999999999999947438</dd></dl></div><div class='xr-var-data'><pre>array(4326, dtype=int32)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>time</span></div><div class='xr-var-dims'>(time)</div><div class='xr-var-dtype'>datetime64[ns]</div><div class='xr-var-preview xr-preview'>2024-05-01T09:57:21.858000 ... 2...</div><input id='attrs-bf0b1ad2-089b-4a0c-ab05-7a3d9913d0ea' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-bf0b1ad2-089b-4a0c-ab05-7a3d9913d0ea' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-84adc46e-03a4-4284-a3ae-3f4e5d446e6d' class='xr-var-data-in' type='checkbox'><label for='data-84adc46e-03a4-4284-a3ae-3f4e5d446e6d' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;2024-05-01T09:57:21.858000000&#x27;, &#x27;2024-05-01T09:57:24.892000000&#x27;,
        &#x27;2024-05-04T10:07:18.103000000&#x27;, &#x27;2024-05-04T10:07:22.389000000&#x27;,
        &#x27;2024-05-06T09:57:19.789000000&#x27;, &#x27;2024-05-06T09:57:22.823000000&#x27;,
        &#x27;2024-05-09T10:07:16.090000000&#x27;, &#x27;2024-05-09T10:07:20.373000000&#x27;,
        &#x27;2024-05-11T09:57:22.239000000&#x27;, &#x27;2024-05-11T09:57:25.274000000&#x27;],
-      dtype=&#x27;datetime64[ns]&#x27;)</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-ad03f84b-6489-4a75-865a-91518683ab65' class='xr-section-summary-in' type='checkbox'  checked><label for='section-ad03f84b-6489-4a75-865a-91518683ab65' class='xr-section-summary' >Data variables: <span>(5)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>scl</span></div><div class='xr-var-dims'>(time, latitude, longitude)</div><div class='xr-var-dtype'>uint8</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(5, 600, 600), meta=np.ndarray&gt;</div><input id='attrs-eb0373bf-ee2c-4556-bf6e-756dbd316408' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-eb0373bf-ee2c-4556-bf6e-756dbd316408' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-26e7d38b-db3b-4326-9c96-3141847e667f' class='xr-var-data-in' type='checkbox'><label for='data-26e7d38b-db3b-4326-9c96-3141847e667f' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>nodata :</span></dt><dd>0</dd></dl></div><div class='xr-var-data'><table>
+      dtype=&#x27;datetime64[ns]&#x27;)</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-795bf094-a800-426e-8153-4538e4e53c06' class='xr-section-summary-in' type='checkbox'  checked><label for='section-795bf094-a800-426e-8153-4538e4e53c06' class='xr-section-summary' >Data variables: <span>(5)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>scl</span></div><div class='xr-var-dims'>(time, latitude, longitude)</div><div class='xr-var-dtype'>uint8</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(5, 600, 600), meta=np.ndarray&gt;</div><input id='attrs-66c2ea54-d4de-43cd-a02b-3b9eb3d8f3be' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-66c2ea54-d4de-43cd-a02b-3b9eb3d8f3be' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-a499ec6e-e050-4eec-8e61-46b09ce94440' class='xr-var-data-in' type='checkbox'><label for='data-a499ec6e-e050-4eec-8e61-46b09ce94440' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>nodata :</span></dt><dd>0</dd></dl></div><div class='xr-var-data'><table>
     <tr>
         <td>
             <table style="border-collapse: collapse;">
@@ -968,7 +968,7 @@ Data variables:
 </svg>
         </td>
     </tr>
-</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>red</span></div><div class='xr-var-dims'>(time, latitude, longitude)</div><div class='xr-var-dtype'>uint16</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(5, 600, 600), meta=np.ndarray&gt;</div><input id='attrs-5db5eb24-1a75-4652-b3fe-e5201e9482da' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-5db5eb24-1a75-4652-b3fe-e5201e9482da' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-d5719240-d0c2-48a7-b828-a840a5c2ab45' class='xr-var-data-in' type='checkbox'><label for='data-d5719240-d0c2-48a7-b828-a840a5c2ab45' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>nodata :</span></dt><dd>0</dd></dl></div><div class='xr-var-data'><table>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>red</span></div><div class='xr-var-dims'>(time, latitude, longitude)</div><div class='xr-var-dtype'>uint16</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(5, 600, 600), meta=np.ndarray&gt;</div><input id='attrs-42b5970a-d103-4d1e-ab43-109470505156' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-42b5970a-d103-4d1e-ab43-109470505156' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-a23bd48e-72cd-4b68-8308-a4363ea6295a' class='xr-var-data-in' type='checkbox'><label for='data-a23bd48e-72cd-4b68-8308-a4363ea6295a' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>nodata :</span></dt><dd>0</dd></dl></div><div class='xr-var-data'><table>
     <tr>
         <td>
             <table style="border-collapse: collapse;">
@@ -1052,7 +1052,7 @@ Data variables:
 </svg>
         </td>
     </tr>
-</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>green</span></div><div class='xr-var-dims'>(time, latitude, longitude)</div><div class='xr-var-dtype'>uint16</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(5, 600, 600), meta=np.ndarray&gt;</div><input id='attrs-6e614e73-5aba-47f7-8fc4-e9ba8b907d8b' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-6e614e73-5aba-47f7-8fc4-e9ba8b907d8b' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-df26bbfc-12bf-455c-8917-03ee06faeecb' class='xr-var-data-in' type='checkbox'><label for='data-df26bbfc-12bf-455c-8917-03ee06faeecb' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>nodata :</span></dt><dd>0</dd></dl></div><div class='xr-var-data'><table>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>green</span></div><div class='xr-var-dims'>(time, latitude, longitude)</div><div class='xr-var-dtype'>uint16</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(5, 600, 600), meta=np.ndarray&gt;</div><input id='attrs-2a8c43d8-d6f9-4ee7-a156-9dfa9aad5c02' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-2a8c43d8-d6f9-4ee7-a156-9dfa9aad5c02' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-2daa3c0b-77cd-4ee4-b7c5-4d97f4985f29' class='xr-var-data-in' type='checkbox'><label for='data-2daa3c0b-77cd-4ee4-b7c5-4d97f4985f29' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>nodata :</span></dt><dd>0</dd></dl></div><div class='xr-var-data'><table>
     <tr>
         <td>
             <table style="border-collapse: collapse;">
@@ -1136,7 +1136,7 @@ Data variables:
 </svg>
         </td>
     </tr>
-</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>blue</span></div><div class='xr-var-dims'>(time, latitude, longitude)</div><div class='xr-var-dtype'>uint16</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(5, 600, 600), meta=np.ndarray&gt;</div><input id='attrs-dad78a05-5dd3-4bc9-aefc-18ebdfe76f04' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-dad78a05-5dd3-4bc9-aefc-18ebdfe76f04' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-81504225-89c8-4978-8096-3320c170cf80' class='xr-var-data-in' type='checkbox'><label for='data-81504225-89c8-4978-8096-3320c170cf80' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>nodata :</span></dt><dd>0</dd></dl></div><div class='xr-var-data'><table>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>blue</span></div><div class='xr-var-dims'>(time, latitude, longitude)</div><div class='xr-var-dtype'>uint16</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(5, 600, 600), meta=np.ndarray&gt;</div><input id='attrs-ff7edf09-f32b-484a-9ae2-9d2329c961a2' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-ff7edf09-f32b-484a-9ae2-9d2329c961a2' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-b462c013-8c42-4ef0-a7ce-290e8c016b02' class='xr-var-data-in' type='checkbox'><label for='data-b462c013-8c42-4ef0-a7ce-290e8c016b02' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>nodata :</span></dt><dd>0</dd></dl></div><div class='xr-var-data'><table>
     <tr>
         <td>
             <table style="border-collapse: collapse;">
@@ -1220,7 +1220,7 @@ Data variables:
 </svg>
         </td>
     </tr>
-</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>nir</span></div><div class='xr-var-dims'>(time, latitude, longitude)</div><div class='xr-var-dtype'>uint16</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(5, 600, 600), meta=np.ndarray&gt;</div><input id='attrs-078a2311-d539-44e2-a18e-5015afa2d97d' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-078a2311-d539-44e2-a18e-5015afa2d97d' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-41dc353f-e48d-44f5-b398-5fbfe2960d71' class='xr-var-data-in' type='checkbox'><label for='data-41dc353f-e48d-44f5-b398-5fbfe2960d71' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>nodata :</span></dt><dd>0</dd></dl></div><div class='xr-var-data'><table>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>nir</span></div><div class='xr-var-dims'>(time, latitude, longitude)</div><div class='xr-var-dtype'>uint16</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(5, 600, 600), meta=np.ndarray&gt;</div><input id='attrs-4a71fbed-8a60-4ffe-bb09-f0a82b92da45' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-4a71fbed-8a60-4ffe-bb09-f0a82b92da45' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-54c5b5ca-591e-42c9-a378-75db43248e39' class='xr-var-data-in' type='checkbox'><label for='data-54c5b5ca-591e-42c9-a378-75db43248e39' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>nodata :</span></dt><dd>0</dd></dl></div><div class='xr-var-data'><table>
     <tr>
         <td>
             <table style="border-collapse: collapse;">
@@ -1304,7 +1304,7 @@ Data variables:
 </svg>
         </td>
     </tr>
-</table></div></li></ul></div></li><li class='xr-section-item'><input id='section-6ace12e2-6f25-45d2-b826-a377f059fe87' class='xr-section-summary-in' type='checkbox'  ><label for='section-6ace12e2-6f25-45d2-b826-a377f059fe87' class='xr-section-summary' >Indexes: <span>(3)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-index-name'><div>latitude</div></div><div class='xr-index-preview'>PandasIndex</div><input type='checkbox' disabled/><label></label><input id='index-f21f5145-b161-45ac-8789-88bd47847859' class='xr-index-data-in' type='checkbox'/><label for='index-f21f5145-b161-45ac-8789-88bd47847859' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(Index([ 48.40709999999999, 48.406499999999994, 48.405899999999995,
+</table></div></li></ul></div></li><li class='xr-section-item'><input id='section-ea373c46-1fd6-4282-8d88-318bd3584efc' class='xr-section-summary-in' type='checkbox'  ><label for='section-ea373c46-1fd6-4282-8d88-318bd3584efc' class='xr-section-summary' >Indexes: <span>(3)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-index-name'><div>latitude</div></div><div class='xr-index-preview'>PandasIndex</div><input type='checkbox' disabled/><label></label><input id='index-c4ca6900-0243-41bf-bc8e-8e994659cf78' class='xr-index-data-in' type='checkbox'/><label for='index-c4ca6900-0243-41bf-bc8e-8e994659cf78' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(Index([ 48.40709999999999, 48.406499999999994, 48.405899999999995,
         48.40529999999999,  48.40469999999999,  48.40409999999999,
        48.403499999999994, 48.402899999999995,  48.40229999999999,
         48.40169999999999,
@@ -1313,7 +1313,7 @@ Data variables:
        47.863499999999995, 47.862899999999996,  47.86229999999999,
         47.86169999999999,  47.86109999999999, 47.860499999999995,
        47.859899999999996],
-      dtype=&#x27;float64&#x27;, name=&#x27;latitude&#x27;, length=913))</pre></div></li><li class='xr-var-item'><div class='xr-index-name'><div>longitude</div></div><div class='xr-index-preview'>PandasIndex</div><input type='checkbox' disabled/><label></label><input id='index-b263d0fc-38b0-4ea3-bd58-9eb254df93f9' class='xr-index-data-in' type='checkbox'/><label for='index-b263d0fc-38b0-4ea3-bd58-9eb254df93f9' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(Index([           16.3203, 16.320899999999998,            16.3215,
+      dtype=&#x27;float64&#x27;, name=&#x27;latitude&#x27;, length=913))</pre></div></li><li class='xr-var-item'><div class='xr-index-name'><div>longitude</div></div><div class='xr-index-preview'>PandasIndex</div><input type='checkbox' disabled/><label></label><input id='index-903ee292-ffff-4b29-9ae9-c061916defc8' class='xr-index-data-in' type='checkbox'/><label for='index-903ee292-ffff-4b29-9ae9-c061916defc8' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(Index([           16.3203, 16.320899999999998,            16.3215,
                   16.3221,            16.3227,            16.3233,
                   16.3239,            16.3245,            16.3251,
                   16.3257,
@@ -1322,12 +1322,12 @@ Data variables:
                   16.8963,            16.8969,            16.8975,
                   16.8981, 16.898699999999998,            16.8993,
                   16.8999],
-      dtype=&#x27;float64&#x27;, name=&#x27;longitude&#x27;, length=967))</pre></div></li><li class='xr-var-item'><div class='xr-index-name'><div>time</div></div><div class='xr-index-preview'>PandasIndex</div><input type='checkbox' disabled/><label></label><input id='index-ca3a4d36-91a3-45b2-ad88-b634f37fa368' class='xr-index-data-in' type='checkbox'/><label for='index-ca3a4d36-91a3-45b2-ad88-b634f37fa368' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(DatetimeIndex([&#x27;2024-05-01 09:57:21.858000&#x27;, &#x27;2024-05-01 09:57:24.892000&#x27;,
+      dtype=&#x27;float64&#x27;, name=&#x27;longitude&#x27;, length=967))</pre></div></li><li class='xr-var-item'><div class='xr-index-name'><div>time</div></div><div class='xr-index-preview'>PandasIndex</div><input type='checkbox' disabled/><label></label><input id='index-ac07b349-1415-41d4-be71-3a35d7ad21c3' class='xr-index-data-in' type='checkbox'/><label for='index-ac07b349-1415-41d4-be71-3a35d7ad21c3' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(DatetimeIndex([&#x27;2024-05-01 09:57:21.858000&#x27;, &#x27;2024-05-01 09:57:24.892000&#x27;,
                &#x27;2024-05-04 10:07:18.103000&#x27;, &#x27;2024-05-04 10:07:22.389000&#x27;,
                &#x27;2024-05-06 09:57:19.789000&#x27;, &#x27;2024-05-06 09:57:22.823000&#x27;,
                &#x27;2024-05-09 10:07:16.090000&#x27;, &#x27;2024-05-09 10:07:20.373000&#x27;,
                &#x27;2024-05-11 09:57:22.239000&#x27;, &#x27;2024-05-11 09:57:25.274000&#x27;],
-              dtype=&#x27;datetime64[ns]&#x27;, name=&#x27;time&#x27;, freq=None))</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-f21dc6e3-2ea7-494a-bf83-5201955b9e89' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-f21dc6e3-2ea7-494a-bf83-5201955b9e89' class='xr-section-summary'  title='Expand/collapse section'>Attributes: <span>(0)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'></dl></div></li></ul></div></div></div></div>
+              dtype=&#x27;datetime64[ns]&#x27;, name=&#x27;time&#x27;, freq=None))</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-c21e20e9-3366-406d-a10a-0b376f52938d' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-c21e20e9-3366-406d-a10a-0b376f52938d' class='xr-section-summary'  title='Expand/collapse section'>Attributes: <span>(0)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'></dl></div></li></ul></div></div></div></div>
 </div>
 </section>
 </section>
@@ -1340,6 +1340,8 @@ Data variables:
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define a mask for valid pixels (non-cloud)</span>
+
+
 <span class="k">def</span><span class="w"> </span><span class="nf">is_valid_pixel</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
     <span class="c1"># include only vegetated, not_vegitated, water, and snow</span>
     <span class="k">return</span> <span class="p">((</span><span class="n">data</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span> <span class="o">&lt;</span> <span class="mi">7</span><span class="p">))</span> <span class="o">|</span> <span class="p">(</span><span class="n">data</span> <span class="o">==</span> <span class="mi">11</span><span class="p">)</span>
@@ -1383,7 +1385,7 @@ Data variables:
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># compute a false color image</span>
 <span class="c1"># near infrared instead of red</span>
 <span class="n">fc_median</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">dc</span><span class="p">[[</span><span class="s1">&#39;nir&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">]]</span>
+    <span class="n">dc</span><span class="p">[[</span><span class="s2">&quot;nir&quot;</span><span class="p">,</span> <span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="s2">&quot;blue&quot;</span><span class="p">]]</span>
     <span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dc</span><span class="o">.</span><span class="n">valid</span><span class="p">)</span>
     <span class="o">.</span><span class="n">to_dataarray</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s2">&quot;band&quot;</span><span class="p">)</span>
     <span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="s2">&quot;band&quot;</span><span class="p">)</span>
@@ -1392,8 +1394,8 @@ Data variables:
 <span class="p">)</span>
 
 <span class="n">title_fc</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s2">&quot;False color - Median Composite&quot;</span><span class="o">+</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">start_date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">.%m.%Y&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">end_date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">.%m.%Y&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="s2">&quot;False color - Median Composite&quot;</span>
+    <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">start_date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">.%m.%Y&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">end_date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">.%m.%Y&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="p">)</span>
 <span class="n">fc_median</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">robust</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title_fc</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -1422,14 +1424,16 @@ NDVI = \frac{NIR - Red}{NIR + Red}
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Normalized Difference Vegetation Index (NDVI)</span>
+
+
 <span class="k">def</span><span class="w"> </span><span class="nf">normalized_difference</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span> <span class="o">*</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
 
 
 <span class="n">ndvi</span> <span class="o">=</span> <span class="n">normalized_difference</span><span class="p">(</span><span class="n">dc</span><span class="o">.</span><span class="n">nir</span><span class="p">,</span> <span class="n">dc</span><span class="o">.</span><span class="n">red</span><span class="p">)</span>
-<span class="n">ndvi</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
-    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;cmc.cork&quot;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span>
-<span class="p">)</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;NDVI&quot;</span><span class="p">)</span>
+<span class="n">ndvi</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;cmc.cork&quot;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
+    <span class="s2">&quot;NDVI&quot;</span>
+<span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1450,22 +1454,139 @@ NDVI = \frac{NIR - Red}{NIR + Red}
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define Polygons</span>
 <span class="n">forest_areas</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="mi">0</span><span class="p">:</span> <span class="p">[</span><span class="n">Polygon</span><span class="p">([(</span><span class="mf">16.482772</span><span class="p">,</span> <span class="mf">47.901753</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.465133</span><span class="p">,</span> <span class="mf">47.870124</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.510142</span><span class="p">,</span> <span class="mf">47.874382</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.482772</span><span class="p">,</span> <span class="mf">47.901753</span><span class="p">)])],</span>
-    <span class="mi">1</span><span class="p">:</span> <span class="p">[</span><span class="n">Polygon</span><span class="p">([(</span><span class="mf">16.594079</span><span class="p">,</span> <span class="mf">47.938855</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.581914</span><span class="p">,</span> <span class="mf">47.894454</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.620233</span><span class="p">,</span> <span class="mf">47.910268</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.594079</span><span class="p">,</span> <span class="mf">47.938855</span><span class="p">)])],</span>
-    <span class="mi">2</span><span class="p">:</span> <span class="p">[</span><span class="n">Polygon</span><span class="p">([(</span><span class="mf">16.67984</span><span class="p">,</span> <span class="mf">47.978998</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.637263</span><span class="p">,</span> <span class="mf">47.971091</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.660376</span><span class="p">,</span> <span class="mf">47.929123</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.67984</span><span class="p">,</span> <span class="mf">47.978998</span><span class="p">)])],</span>
-    <span class="mi">3</span><span class="p">:</span> <span class="p">[</span><span class="n">Polygon</span><span class="p">([(</span><span class="mf">16.756477</span><span class="p">,</span> <span class="mf">48.000286</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.723024</span><span class="p">,</span> <span class="mf">47.983256</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.739446</span><span class="p">,</span> <span class="mf">47.972916</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.756477</span><span class="p">,</span> <span class="mf">48.000286</span><span class="p">)])],</span>
-    <span class="mi">4</span><span class="p">:</span> <span class="p">[</span><span class="n">Polygon</span><span class="p">([(</span><span class="mf">16.80696</span><span class="p">,</span> <span class="mf">48.135923</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.780806</span><span class="p">,</span> <span class="mf">48.125583</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.798445</span><span class="p">,</span> <span class="mf">48.115243</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.80696</span><span class="p">,</span> <span class="mf">48.135923</span><span class="p">)])],</span>
-    <span class="mi">5</span><span class="p">:</span> <span class="p">[</span><span class="n">Polygon</span><span class="p">([(</span><span class="mf">16.684097</span><span class="p">,</span> <span class="mf">48.144438</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.664634</span><span class="p">,</span> <span class="mf">48.124366</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.690788</span><span class="p">,</span> <span class="mf">48.118892</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.684097</span><span class="p">,</span> <span class="mf">48.144438</span><span class="p">)])],</span>
-    <span class="mi">6</span><span class="p">:</span> <span class="p">[</span><span class="n">Polygon</span><span class="p">([(</span><span class="mf">16.550894</span><span class="p">,</span> <span class="mf">48.169984</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.530822</span><span class="p">,</span> <span class="mf">48.165118</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.558801</span><span class="p">,</span> <span class="mf">48.137139</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.550894</span><span class="p">,</span> <span class="mf">48.169984</span><span class="p">)])],</span>
-    <span class="mi">7</span><span class="p">:</span> <span class="p">[</span><span class="n">Polygon</span><span class="p">([(</span><span class="mf">16.588604</span><span class="p">,</span> <span class="mf">48.402329</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.556976</span><span class="p">,</span> <span class="mf">48.401112</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.580697</span><span class="p">,</span> <span class="mf">48.382865</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.588604</span><span class="p">,</span> <span class="mf">48.402329</span><span class="p">)])],</span>
+    <span class="mi">0</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">Polygon</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="p">(</span><span class="mf">16.482772</span><span class="p">,</span> <span class="mf">47.901753</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.465133</span><span class="p">,</span> <span class="mf">47.870124</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.510142</span><span class="p">,</span> <span class="mf">47.874382</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.482772</span><span class="p">,</span> <span class="mf">47.901753</span><span class="p">),</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+    <span class="p">],</span>
+    <span class="mi">1</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">Polygon</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="p">(</span><span class="mf">16.594079</span><span class="p">,</span> <span class="mf">47.938855</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.581914</span><span class="p">,</span> <span class="mf">47.894454</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.620233</span><span class="p">,</span> <span class="mf">47.910268</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.594079</span><span class="p">,</span> <span class="mf">47.938855</span><span class="p">),</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+    <span class="p">],</span>
+    <span class="mi">2</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">Polygon</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="p">(</span><span class="mf">16.67984</span><span class="p">,</span> <span class="mf">47.978998</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.637263</span><span class="p">,</span> <span class="mf">47.971091</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.660376</span><span class="p">,</span> <span class="mf">47.929123</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.67984</span><span class="p">,</span> <span class="mf">47.978998</span><span class="p">),</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+    <span class="p">],</span>
+    <span class="mi">3</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">Polygon</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="p">(</span><span class="mf">16.756477</span><span class="p">,</span> <span class="mf">48.000286</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.723024</span><span class="p">,</span> <span class="mf">47.983256</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.739446</span><span class="p">,</span> <span class="mf">47.972916</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.756477</span><span class="p">,</span> <span class="mf">48.000286</span><span class="p">),</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+    <span class="p">],</span>
+    <span class="mi">4</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">Polygon</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="p">(</span><span class="mf">16.80696</span><span class="p">,</span> <span class="mf">48.135923</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.780806</span><span class="p">,</span> <span class="mf">48.125583</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.798445</span><span class="p">,</span> <span class="mf">48.115243</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.80696</span><span class="p">,</span> <span class="mf">48.135923</span><span class="p">),</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+    <span class="p">],</span>
+    <span class="mi">5</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">Polygon</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="p">(</span><span class="mf">16.684097</span><span class="p">,</span> <span class="mf">48.144438</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.664634</span><span class="p">,</span> <span class="mf">48.124366</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.690788</span><span class="p">,</span> <span class="mf">48.118892</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.684097</span><span class="p">,</span> <span class="mf">48.144438</span><span class="p">),</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+    <span class="p">],</span>
+    <span class="mi">6</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">Polygon</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="p">(</span><span class="mf">16.550894</span><span class="p">,</span> <span class="mf">48.169984</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.530822</span><span class="p">,</span> <span class="mf">48.165118</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.558801</span><span class="p">,</span> <span class="mf">48.137139</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.550894</span><span class="p">,</span> <span class="mf">48.169984</span><span class="p">),</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+    <span class="p">],</span>
+    <span class="mi">7</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">Polygon</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="p">(</span><span class="mf">16.588604</span><span class="p">,</span> <span class="mf">48.402329</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.556976</span><span class="p">,</span> <span class="mf">48.401112</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.580697</span><span class="p">,</span> <span class="mf">48.382865</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.588604</span><span class="p">,</span> <span class="mf">48.402329</span><span class="p">),</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+    <span class="p">],</span>
 <span class="p">}</span>
 
 <span class="n">nonforest_areas</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="mi">0</span><span class="p">:</span> <span class="p">[</span><span class="n">Polygon</span><span class="p">([(</span><span class="mf">16.674974</span><span class="p">,</span> <span class="mf">48.269126</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.623882</span><span class="p">,</span> <span class="mf">48.236281</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.682272</span><span class="p">,</span> <span class="mf">48.213168</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.674974</span><span class="p">,</span> <span class="mf">48.269126</span><span class="p">)])],</span>
-    <span class="mi">1</span><span class="p">:</span> <span class="p">[</span><span class="n">Polygon</span><span class="p">([(</span><span class="mf">16.375723</span><span class="p">,</span> <span class="mf">48.228374</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.357476</span><span class="p">,</span> <span class="mf">48.188839</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.399444</span><span class="p">,</span> <span class="mf">48.185798</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.375723</span><span class="p">,</span> <span class="mf">48.228374</span><span class="p">)])],</span>
-    <span class="mi">2</span><span class="p">:</span> <span class="p">[</span><span class="n">Polygon</span><span class="p">([(</span><span class="mf">16.457834</span><span class="p">,</span> <span class="mf">48.26426</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.418907</span><span class="p">,</span> <span class="mf">48.267301</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.440804</span><span class="p">,</span> <span class="mf">48.23324</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.457834</span><span class="p">,</span> <span class="mf">48.26426</span><span class="p">)])],</span>
-    <span class="mi">3</span><span class="p">:</span> <span class="p">[</span><span class="n">Polygon</span><span class="p">([(</span><span class="mf">16.519266</span><span class="p">,</span> <span class="mf">48.101861</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.470607</span><span class="p">,</span> <span class="mf">48.100645</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.500411</span><span class="p">,</span> <span class="mf">48.07145</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.519266</span><span class="p">,</span> <span class="mf">48.101861</span><span class="p">)])],</span>
-    <span class="mi">4</span><span class="p">:</span> <span class="p">[</span><span class="n">Polygon</span><span class="p">([(</span><span class="mf">16.453577</span><span class="p">,</span> <span class="mf">48.051986</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.412217</span><span class="p">,</span> <span class="mf">48.067192</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.425598</span><span class="p">,</span> <span class="mf">48.012451</span><span class="p">),</span> <span class="p">(</span><span class="mf">16.453577</span><span class="p">,</span> <span class="mf">48.051986</span><span class="p">)])],</span>
+    <span class="mi">0</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">Polygon</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="p">(</span><span class="mf">16.674974</span><span class="p">,</span> <span class="mf">48.269126</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.623882</span><span class="p">,</span> <span class="mf">48.236281</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.682272</span><span class="p">,</span> <span class="mf">48.213168</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.674974</span><span class="p">,</span> <span class="mf">48.269126</span><span class="p">),</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+    <span class="p">],</span>
+    <span class="mi">1</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">Polygon</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="p">(</span><span class="mf">16.375723</span><span class="p">,</span> <span class="mf">48.228374</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.357476</span><span class="p">,</span> <span class="mf">48.188839</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.399444</span><span class="p">,</span> <span class="mf">48.185798</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.375723</span><span class="p">,</span> <span class="mf">48.228374</span><span class="p">),</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+    <span class="p">],</span>
+    <span class="mi">2</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">Polygon</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="p">(</span><span class="mf">16.457834</span><span class="p">,</span> <span class="mf">48.26426</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.418907</span><span class="p">,</span> <span class="mf">48.267301</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.440804</span><span class="p">,</span> <span class="mf">48.23324</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.457834</span><span class="p">,</span> <span class="mf">48.26426</span><span class="p">),</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+    <span class="p">],</span>
+    <span class="mi">3</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">Polygon</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="p">(</span><span class="mf">16.519266</span><span class="p">,</span> <span class="mf">48.101861</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.470607</span><span class="p">,</span> <span class="mf">48.100645</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.500411</span><span class="p">,</span> <span class="mf">48.07145</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.519266</span><span class="p">,</span> <span class="mf">48.101861</span><span class="p">),</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+    <span class="p">],</span>
+    <span class="mi">4</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">Polygon</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="p">(</span><span class="mf">16.453577</span><span class="p">,</span> <span class="mf">48.051986</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.412217</span><span class="p">,</span> <span class="mf">48.067192</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.425598</span><span class="p">,</span> <span class="mf">48.012451</span><span class="p">),</span>
+                <span class="p">(</span><span class="mf">16.453577</span><span class="p">,</span> <span class="mf">48.051986</span><span class="p">),</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+    <span class="p">],</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1521,8 +1642,7 @@ NDVI = \frac{NIR - Red}{NIR + Red}
     <span class="n">idx</span><span class="p">:</span> <span class="n">clip_array</span><span class="p">(</span><span class="n">ds_class</span><span class="p">,</span> <span class="n">polygon</span><span class="p">)</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">polygon</span> <span class="ow">in</span> <span class="n">forest_areas</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
 <span class="p">}</span>
 <span class="n">data_dict_nonfeat</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">idx</span><span class="p">:</span> <span class="n">clip_array</span><span class="p">(</span><span class="n">ds_class</span><span class="p">,</span> <span class="n">polygon</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">polygon</span> <span class="ow">in</span> <span class="n">nonforest_areas</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+    <span class="n">idx</span><span class="p">:</span> <span class="n">clip_array</span><span class="p">(</span><span class="n">ds_class</span><span class="p">,</span> <span class="n">polygon</span><span class="p">)</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">polygon</span> <span class="ow">in</span> <span class="n">nonforest_areas</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1573,9 +1693,7 @@ NDVI = \frac{NIR - Red}{NIR + Red}
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">image_data</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">ds_class</span><span class="p">[</span><span class="n">bands</span><span class="p">]</span>
-    <span class="o">.</span><span class="n">to_array</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s2">&quot;band&quot;</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="s2">&quot;longitude&quot;</span><span class="p">,</span> <span class="s2">&quot;band&quot;</span><span class="p">)</span>
+    <span class="n">ds_class</span><span class="p">[</span><span class="n">bands</span><span class="p">]</span><span class="o">.</span><span class="n">to_array</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s2">&quot;band&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="s2">&quot;longitude&quot;</span><span class="p">,</span> <span class="s2">&quot;band&quot;</span><span class="p">)</span>
 <span class="p">)</span>
 
 <span class="c1"># Reshape the image data</span>
@@ -1744,11 +1862,11 @@ weighted avg       0.89      0.88      0.88     12105
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/101cfed99e44522a57e478d3b7a3a7486ff33c555b6afe9c13e92e41f2a29b04.png" src="../../_images/101cfed99e44522a57e478d3b7a3a7486ff33c555b6afe9c13e92e41f2a29b04.png" />
+<img alt="../../_images/c2871e7f0c2641aede91e01a11d8c67a0ceb79c6540d3eab3e9b94422d6dbc4c.png" src="../../_images/c2871e7f0c2641aede91e01a11d8c67a0ceb79c6540d3eab3e9b94422d6dbc4c.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RANDOM FOREST: 
                precision    recall  f1-score   support
 
-         0.0       0.96      0.95      0.95      6618
+         0.0       0.96      0.95      0.96      6618
          1.0       0.94      0.95      0.95      5487
 
     accuracy                           0.95     12105
@@ -1781,13 +1899,13 @@ weighted avg       0.95      0.95      0.95     12105
   <tbody>
     <tr>
       <th>Actual Negative</th>
-      <td>6301</td>
-      <td>317</td>
+      <td>6303</td>
+      <td>315</td>
     </tr>
     <tr>
       <th>Actual Positive</th>
-      <td>285</td>
-      <td>5202</td>
+      <td>277</td>
+      <td>5210</td>
     </tr>
   </tbody>
 </table>
@@ -1801,9 +1919,7 @@ weighted avg       0.95      0.95      0.95     12105
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># | code-fold: true</span>
-<span class="n">cmap_trio</span> <span class="o">=</span> <span class="n">colors</span><span class="o">.</span><span class="n">ListedColormap</span><span class="p">(</span>
-    <span class="p">[</span><span class="s2">&quot;whitesmoke&quot;</span><span class="p">,</span> <span class="s2">&quot;indianred&quot;</span><span class="p">,</span> <span class="s2">&quot;goldenrod&quot;</span><span class="p">,</span> <span class="s2">&quot;darkgreen&quot;</span><span class="p">]</span>
-<span class="p">)</span>
+<span class="n">cmap_trio</span> <span class="o">=</span> <span class="n">colors</span><span class="o">.</span><span class="n">ListedColormap</span><span class="p">([</span><span class="s2">&quot;whitesmoke&quot;</span><span class="p">,</span> <span class="s2">&quot;indianred&quot;</span><span class="p">,</span> <span class="s2">&quot;goldenrod&quot;</span><span class="p">,</span> <span class="s2">&quot;darkgreen&quot;</span><span class="p">])</span>
 
 
 <span class="n">double_clf</span> <span class="o">=</span> <span class="n">ds_class</span><span class="p">[</span><span class="s2">&quot;NB-forest&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">ds_class</span><span class="p">[</span><span class="s2">&quot;RF-forest&quot;</span><span class="p">]</span>
@@ -1821,7 +1937,7 @@ weighted avg       0.95      0.95      0.95     12105
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/a6b480b6f96ffd20a7c1fb4382418d707bb0773d0d725da46ac84d8a4edd2cfc.png" src="../../_images/a6b480b6f96ffd20a7c1fb4382418d707bb0773d0d725da46ac84d8a4edd2cfc.png" />
+<img alt="../../_images/5de75999b37581c5d66b54c61fb9e9678f29ca5f513adc2daa85755d6eb1412d.png" src="../../_images/5de75999b37581c5d66b54c61fb9e9678f29ca5f513adc2daa85755d6eb1412d.png" />
 </div>
 </div>
 <p>The areas where both classifiers agree include the larger forested regions, such as the <em>Nationalpark Donau-Auen</em> and the <em>Leithagebirge</em>. Additionally, both classifiers accurately identified the urban areas of Vienna and correctly excluded them from being classified as forested.</p>
@@ -1849,7 +1965,7 @@ weighted avg       0.95      0.95      0.95     12105
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/f2f051cb93c592836fd572cb4489d50979fd2b83aa6d73814c566c0e2b8c034d.png" src="../../_images/f2f051cb93c592836fd572cb4489d50979fd2b83aa6d73814c566c0e2b8c034d.png" />
+<img alt="../../_images/fb62de45c76ad687c95a3f04868151ba8b0c224b75d24fe84e00186520f4f1b4.png" src="../../_images/fb62de45c76ad687c95a3f04868151ba8b0c224b75d24fe84e00186520f4f1b4.png" />
 </div>
 </div>
 <p>When plotting the classified areas individually, we observe that the Random Forest classifier mistakenly identified the Danube River as a forested area. Conversely, the Naive Bayes classifier erroneously classified a significant amount of cropland as forest.</p>
@@ -1863,9 +1979,7 @@ weighted avg       0.95      0.95      0.95     12105
     <span class="n">num_2_class</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;Naive Bayes&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;Random Forest&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="s2">&quot;Both&quot;</span><span class="p">}</span>
     <span class="n">counts</span><span class="p">[</span><span class="n">num_2_class</span><span class="p">[</span><span class="n">num</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">double_clf</span> <span class="o">==</span> <span class="n">num</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 
-<span class="n">class_counts_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-    <span class="nb">list</span><span class="p">(</span><span class="n">counts</span><span class="o">.</span><span class="n">items</span><span class="p">()),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Class&quot;</span><span class="p">,</span> <span class="s2">&quot;Count&quot;</span><span class="p">]</span>
-<span class="p">)</span>
+<span class="n">class_counts_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">counts</span><span class="o">.</span><span class="n">items</span><span class="p">()),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Class&quot;</span><span class="p">,</span> <span class="s2">&quot;Count&quot;</span><span class="p">])</span>
 <span class="n">class_counts_df</span><span class="p">[</span><span class="s2">&quot;Percentage&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">class_counts_df</span><span class="p">[</span><span class="s2">&quot;Count&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">class_counts_df</span><span class="p">[</span><span class="s2">&quot;Count&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 <span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
@@ -1892,7 +2006,7 @@ weighted avg       0.95      0.95      0.95     12105
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/11e8356641a3737972b67fb9150f6f3b1f8ff055155cf2c603c2f821b15fd295.png" src="../../_images/11e8356641a3737972b67fb9150f6f3b1f8ff055155cf2c603c2f821b15fd295.png" />
+<img alt="../../_images/139ee22c530c945a0c1fc9b64f9a110007f8cfc933c8c745c66dd34761e6adec.png" src="../../_images/139ee22c530c945a0c1fc9b64f9a110007f8cfc933c8c745c66dd34761e6adec.png" />
 </div>
 </div>
 </section>
@@ -2222,7 +2336,7 @@ By the <a href="https://projectpythia.org/">Project Pythia</a> Community
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on 1 February 2025.
+  Last updated on 6 February 2025.
   <br/>
 </p>
   </div>
@@ -2276,7 +2390,7 @@ By the <a href="https://projectpythia.org/">Project Pythia</a> Community
         
           By the <a href="https://projectpythia.org/">Project Pythia</a> Community.
         
-          Last updated on 1 February 2025.
+          Last updated on 6 February 2025.
         </p>
       </div>
     </div>
