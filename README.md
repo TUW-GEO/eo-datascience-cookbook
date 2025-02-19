@@ -30,13 +30,13 @@ the necessary skills to support scalable and reproducible research.
 
 ## Authors
 
-[Wolfgang Wagner](@wagner-wolfgang), [Martin Schobben](@martinschobben),
-[Nikolas Pikall](@npikall), [Joseph Wagner](@wagnerjoseph), [Davide Festa](@maybedave),
-[Felix David Reuß](@FelixReuss), [Luka Jovic](@lukojovic)
+[Wolfgang Wagner](https://github.com/wagner-wolfgang), [Martin Schobben](https://github.com/martinschobben),
+[Nikolas Pikall](https://github.com/npikall), [Joseph Wagner](https://github.com/wagnerjoseph), [Davide Festa](https://github.com/maybedave),
+[Felix David Reuß](https://github.com/FelixReuss), [Luka Jovic](https://github.com/lukojovic)
 
 ### Contributors
 
-<a href="https://github.com/TUW-GEO/eo-datascience-cookbook/graphs/contributors">
+<a href="https://github.com/ProjectPythia/eo-datascience-cookbook/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=ProjectPythia/eo-datascience-cookbook" />
 </a>
 
@@ -92,7 +92,7 @@ Jupyter](https://foundations.projectpythia.org/foundations/getting-started-jupyt
 If you are interested in running this material locally on your computer, you will
 need to follow this workflow:
 
-1. Clone the `https://github.com/TUW-GEO/eo-datascience-cookbook` repository:
+1. Clone the `https://github.com/ProjectPythia/eo-datascience-cookbook` repository:
 
    ```bash
     git clone https://github.com/TUW-GEO/eo-datascience-cookbook
